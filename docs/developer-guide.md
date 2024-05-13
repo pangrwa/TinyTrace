@@ -2,8 +2,6 @@
 layout: page
 title: Developer Guide
 --- 
-<<<<<<< HEAD
-=======
 
 ## TinyURL 
 
@@ -43,15 +41,9 @@ title: Developer Guide
 - Table URL, it's possible to add more fields for metrics purposes, eg: 
     - clicks
     - creation date
-- Use NoSql since URL table can get rather huge 
-- Indepedent of the URL shortener service which requires RDMS
-    since we need to be ACID compliant in the event that two
-    users get mapped to the same short_url key 
 
 ### Shortening Algorithm
-- **URL Encoding through base 62**
-    - [0-9][a-z][A-Z]
-    - Based on estimation, we use 7 characters for the short URL, we can roll random character 
+- 
 
 ## Requirements
 ### User Stories
@@ -74,4 +66,3 @@ title: Developer Guide
 - https://medium.com/@sandeep4.verma/system-design-scalable-url-shortener-service-like-tinyurl-106f30f23a82
 - https://www.geeksforgeeks.org/system-design-url-shortening-service/
 - https://medium.com/homeday/how-does-it-feel-like-with-your-own-url-shortener-serverless-service-5fce0dd1bbec
->>>>>>> 43e50ad (init java boot spring)
