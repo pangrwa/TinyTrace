@@ -1,1 +1,1 @@
-![Developer Guide](./developer-guide.md)
+[Developer Guide](./developer-guide.md)
