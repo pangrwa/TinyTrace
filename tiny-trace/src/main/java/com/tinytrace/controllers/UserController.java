@@ -3,15 +3,17 @@ package com.tinytrace.controllers;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tinytrace.repositories.UserRepository;
+
 @RestController
 public class UserController {
-    private final UserRepository UserRepository;
+    private final UserRepository userRepository;
 
-    public UserController(UserRepository UserRepository) {
-        this.UserRepository = UserRepository; 
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository; 
     }
 
-    @PostMapping("/login")
+    @PostMapping("/users")
     public String login() {
         // handle logic of login
         return "login success"; 

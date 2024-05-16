@@ -25,6 +25,13 @@ dependencies {
 
 	// H2 Database
 	runtimeOnly 'com.h2database:h2'
+
+
+	// Lombok for getters and setters
+	implementation 'org.projectlombok:lombok'
+
+	// for getting all endpoints
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('test') {
