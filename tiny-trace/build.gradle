@@ -29,9 +29,13 @@ dependencies {
 
 	// Lombok for getters and setters
 	implementation 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
 	// for getting all endpoints
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// hateoas principle for hypermedia
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 }
 
 tasks.named('test') {
