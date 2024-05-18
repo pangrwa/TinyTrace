@@ -7,7 +7,7 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tinytrace.exceptions.UserNotFoundException;
+import com.tinytrace.exceptions.users.UserNotFoundException;
 import com.tinytrace.models.User;
 import com.tinytrace.repositories.UserRepository;
 

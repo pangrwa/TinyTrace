@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tinytrace.UserModelAssembler;
-import com.tinytrace.exceptions.UserNotFoundException;
+import com.tinytrace.exceptions.users.UserNotFoundException;
 import com.tinytrace.models.User;
 import com.tinytrace.repositories.UserRepository;
 import com.tinytrace.services.UserService;
@@ -31,7 +31,7 @@ public class UserController {
     private final UserModelAssembler userModelAssembler; 
     private final UserService userService;
 
-    public UserController(UserModelAssembler userModelAssembler, UserService userService) {
+    public UserController( UserModelAssembler userModelAssembler, UserService userService) {
         this.userModelAssembler = userModelAssembler;
         this.userService = userService; 
     }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.tinytrace.dto.LoginRequest;
 import com.tinytrace.dto.SignupRequest;
+import com.tinytrace.exceptions.users.UserExistsException;
 import com.tinytrace.models.User;
 
 @Service
@@ -23,8 +24,7 @@ public class AuthService {
 
     public User handleSignup(SignupRequest signupRequest) {
         if (userService.existsByEmail(signupRequest.email())) {
-            // todo: throw custom exception
-            throw new IllegalArgumentException("Email already exists");
+            throw new UserExistsException(signupRequest.email()); 
         }
         User user = new User(
             signupRequest.email(),

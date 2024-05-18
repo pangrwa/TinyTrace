@@ -1,4 +1,4 @@
-package com.tinytrace.exceptions;
+package com.tinytrace.exceptions.users;
 
 public class UserNotFoundException extends RuntimeException {
     
