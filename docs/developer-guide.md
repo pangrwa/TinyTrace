@@ -10,6 +10,8 @@ title: Developer Guide
     - [**API Design**](#api-design)
     - [**Database Schema**](#database-schema)
     - [**Shortening Algorithm**](#shortening-algorithm)
+- [**Structure**](#structure)
+    - [**Error Handling**](#error-handling)
 - [**Requirements**](#requirements)
     - [**User Stories**](#user-stories)
     - [**Non-Functional Requirements**](#non-functional-requirements)
@@ -44,6 +46,10 @@ title: Developer Guide
 
 ### Shortening Algorithm
 - 
+
+## Structure
+### Error Handling
+I chose to use `@ControllerAdvice` global exception handling instead of using `ResponseStatusExcepion` handling because I feel I don't want to fill my controllers with many `try-catch` blocks and I still find myself needing to create exception classes to handle different errors although `ResponseStatusException` goal was to try to fix this, but this is mainly for the same exception type but providing the flexibility of sending different status error code. 
 
 ## Requirements
 ### User Stories
