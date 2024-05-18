@@ -7,12 +7,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.SpringVersion;
 
 @SpringBootApplication
 public class TinyTraceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TinyTraceApplication.class, args);
+		System.out.printf("My Spring version is: %s\n", SpringVersion.getVersion());
 	}
 
 	@Bean
