@@ -5,19 +5,27 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import com.tinytrace.configs.SecurityUser;
 import com.tinytrace.exceptions.users.UserNotFoundException;
 import com.tinytrace.models.User;
 import com.tinytrace.repositories.UserRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
-public class UserService {
+@AllArgsConstructor
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        User user = findByUsername(username);
+        return new SecurityUser(user); 
+        
     }
 
     public User findById(long id) {
