@@ -1,6 +1,8 @@
 package com.tinytrace.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tinytrace.dto.LoginRequest;
@@ -8,17 +10,23 @@ import com.tinytrace.dto.SignupRequest;
 import com.tinytrace.exceptions.users.UserExistsException;
 import com.tinytrace.models.User;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class AuthService {
     private final UserService userService; 
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
     
-    @Autowired
-    public AuthService(UserService userService) {
-        this.userService = userService;
-    }
-
     public User handleLogin(LoginRequest loginRequest) {
-        // todo: handle authentication with token in the future
+        // check whether credentials are valid 
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                loginRequest.username(),
+                loginRequest.password()
+            )
+        );
         return userService.findByUsername(loginRequest.username());
     }
 
@@ -29,9 +37,8 @@ public class AuthService {
         User user = new User(
             signupRequest.email(),
             signupRequest.username(),
-            signupRequest.password()
+            passwordEncoder.encode(signupRequest.password())
         ); 
-
         return userService.createUser(user); 
     }
 }
