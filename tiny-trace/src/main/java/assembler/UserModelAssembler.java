@@ -1,4 +1,4 @@
-package com.tinytrace;
+package assembler;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 

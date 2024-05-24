@@ -2,9 +2,10 @@ package com.tinytrace.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tinytrace.UserModelAssembler;
 import com.tinytrace.models.User;
 import com.tinytrace.services.UserService;
+
+import assembler.UserModelAssembler;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

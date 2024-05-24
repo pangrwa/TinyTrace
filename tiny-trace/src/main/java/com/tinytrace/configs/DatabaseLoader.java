@@ -1,4 +1,4 @@
-package com.tinytrace.payroll;
+package com.tinytrace.configs;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.mongodb.core.MongoTemplate;
