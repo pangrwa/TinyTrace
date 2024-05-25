@@ -12,6 +12,7 @@ public class TinyTraceApplication {
 	public static void main(String[] args) {
 		Dotenv dotenv = Dotenv.load(); 
 		dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue())); 
+		dotenv.entries().forEach(entry -> System.out.println(entry));
 
 		SpringApplication.run(TinyTraceApplication.class, args);
 		System.out.printf("My Spring version is: %s\n", SpringVersion.getVersion());
