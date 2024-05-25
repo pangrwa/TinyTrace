@@ -2,10 +2,11 @@ package com.tinytrace.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tinytrace.assembler.UserModelAssembler;
 import com.tinytrace.models.User;
 import com.tinytrace.services.UserService;
 
-import assembler.UserModelAssembler;
+import lombok.AllArgsConstructor;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -21,14 +22,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
+@AllArgsConstructor
 public class UserController {
     private final UserModelAssembler userModelAssembler;
     private final UserService userService;
-
-    public UserController(UserModelAssembler userModelAssembler, UserService userService) {
-        this.userModelAssembler = userModelAssembler;
-        this.userService = userService;
-    }
 
     @GetMapping("/users/{id}")
     public EntityModel<User> getUserById(@PathVariable String id) {
