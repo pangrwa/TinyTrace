@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.tinytrace.exceptions.users.UserExistsException;
 import com.tinytrace.exceptions.users.UserNotFoundException;
+import com.tinytrace.exceptions.urls.UrlNotFoundException;
 
 @ControllerAdvice
 public class GlobalExcetionHandler {
@@ -22,5 +23,11 @@ public class GlobalExcetionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
+
+    @ExceptionHandler(UrlNotFoundException.class) 
+    public ResponseEntity<ErrorResponse> handleUrlNotFoundException(UrlNotFoundException e) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }  
 
 }

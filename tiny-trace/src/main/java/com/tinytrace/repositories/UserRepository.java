@@ -2,13 +2,13 @@ package com.tinytrace.repositories;
 
 import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.tinytrace.models.User;
 
+public interface UserRepository extends MongoRepository<User, String> {
 
-public interface UserRepository extends CrudRepository<User, Long> {
+    Optional<User> findByUsername(String username);
 
-    Optional<User> findByUsername(String username); 
-    boolean existsByEmail(String email); 
+    boolean existsByEmail(String email);
 }
