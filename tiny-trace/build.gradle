@@ -47,6 +47,9 @@ dependencies {
 
 	// dot env
 	implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+
+	// mongodb
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 }
 
 tasks.named('test') {
