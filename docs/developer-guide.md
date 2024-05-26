@@ -10,6 +10,8 @@ title: Developer Guide
     - [**API Design**](#api-design)
     - [**Database Schema**](#database-schema)
     - [**Shortening Algorithm**](#shortening-algorithm)
+- [**Structure**](#structure)
+    - [**Error Handling**](#error-handling)
 - [**Requirements**](#requirements)
     - [**User Stories**](#user-stories)
     - [**Non-Functional Requirements**](#non-functional-requirements)
@@ -24,17 +26,23 @@ title: Developer Guide
 - **URL Shortener Service**: Responsible for generating short URLs, storing URL mappings and retrieivng original URLs
 
 ### API Design
-1. `POST /api/login`
-2. `POST /api/signup`
+
+**Public Endpoints**
+1. `POST /api/auth/login` 
+2. `POST /api/auth/signup`
     - To create a User
-3. `POST /api/urls`
+3. `GET /api/urls/{shortURLId}`
+    - Output: The original long URL
+
+**Authenticated Endpoints**
+1. `POST /api/urls`
     - To create a short URL 
     - Input: JSON payload with the longURL 
     - Output: The short URL generated 
-4. `GET /api/urls`
+2. `GET /api/urls`
     - Retrieve all the URLs associated with the particular user
-2. `GET /api/urls/{shortURLId}`
-    - Output: The original long URL
+3. `DELETE /api/urls/{shortURLId}`
+    - Delete a short URL and its associated long URL mapping
 
 ### Database Schema
 ![er-diagram](assets/images/ER-diagram.png)
@@ -45,10 +53,18 @@ title: Developer Guide
 ### Shortening Algorithm
 - 
 
+## Structure
+### Error Handling
+I chose to use `@ControllerAdvice` global exception handling instead of using `ResponseStatusExcepion` handling because I don't want to fill my controllers with many `try-catch` blocks and I still find myself needing to create exception classes to handle different errors. `ResponseStatusException` goal was to try to fix this, but this is mainly for the same exception type but providing the flexibility of sending different status error code which doesn't fit in my user. 
+
 ## Requirements
 ### User Stories
 - As a user, I want to have a shorter URL so that I can have an easier time sharing links
 - As a user, I want to view a table of short URLs to long URLs so that I can keep track of which past URLs I have shortened 
+- As a user, I want to be able to delete a short URL mapping 
+- As a user, I want my short URL to be accessible to anyone so I can share with people 
+- As a user, I want to be able to share my a QR code for my shortURL for easier accessbility 
+
 ### Non-Functional Requirements
 - Low latency (100ms)
 - High availability 
