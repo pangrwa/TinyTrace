@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 export default function NavbarWrapper() {
 
     return (
-        <div>
+        <div className="navbar-wrapper">
             <Navbar />
             <Outlet />
         </div>

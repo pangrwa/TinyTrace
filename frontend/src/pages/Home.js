@@ -10,9 +10,6 @@ export default function Home() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h3>Home</h3>
-            <button>Logout</button> 
-        </form>
+        <h1>Home</h1>
     );
 }

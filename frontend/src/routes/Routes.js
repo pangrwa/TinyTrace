@@ -6,7 +6,6 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import PrivateRouter from "./PrivateRouter";
-import Navbar from "../components/Navbar";
 import NavbarWrapper from "./NavbarWrapper";
 
 export default function Routes() {

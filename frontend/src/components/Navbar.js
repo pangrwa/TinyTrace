@@ -8,8 +8,10 @@ export default function Navbar() {
 
     return (
         <header>
-            <div className='container'>
-                <h2>testign</h2>
+            <div className="container">
+                <Link to="/">
+                    <h2>TinyTrace</h2>
+                </Link>
                 <nav>
                     { token && (
                         <div>
