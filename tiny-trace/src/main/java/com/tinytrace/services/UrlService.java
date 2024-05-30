@@ -49,9 +49,7 @@ public class UrlService {
     }
 
     public Url createUrl(Url url) {
-        System.out.println(url); 
         String shortUrl = urlShorterningService.getShortUrl();
-        System.out.println("This is the short url: " + shortUrl);
         String username = authService.getUserDetails().getUsername();
         User user = userService.findByUsername(username);  
         Url newUrl = new Url(
