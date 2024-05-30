@@ -9,7 +9,7 @@ export function useSignup() {
 
     async function signup(email, username, password) {
 
-        const response = await fetch('api/auth/signup', {
+        const response = await fetch('auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', 
