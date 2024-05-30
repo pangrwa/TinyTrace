@@ -37,6 +37,10 @@ public class AuthService {
         if (userService.existsByEmail(signupRequest.email())) {
             throw new UserExistsException(signupRequest.email()); 
         }
+        if (userService.existsByUsername(signupRequest.username())) {
+            throw new UserExistsException(signupRequest.username()); 
+        }
+        
         User user = new User(
             signupRequest.email(),
             signupRequest.username(),
