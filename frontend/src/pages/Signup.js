@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
-import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
 
@@ -8,17 +7,15 @@ export default function Signup() {
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
     const signup = useSignup(); 
-    const navigate = useNavigate(); 
 
     async function handleSubmit(e) {
         e.preventDefault(); 
 
         await signup(email, username, password); 
-        navigate("/"); 
     }
 
     return (
-        <form method="post" onSubmit={handleSubmit}>
+        <form className="signup" method="post" onSubmit={handleSubmit}>
             <h3>Signup</h3>
             <label>Email: </label>
             <input 

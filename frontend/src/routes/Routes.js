@@ -2,9 +2,12 @@ import {
     RouterProvider,
     createBrowserRouter
 } from "react-router-dom";
+import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import PrivateRouter from "./PrivateRouter";
+import Navbar from "../components/Navbar";
+import NavbarWrapper from "./NavbarWrapper";
 
 export default function Routes() {
     const publicRoutes = [
@@ -25,16 +28,20 @@ export default function Routes() {
             children: [
                 {
                     path: "/",
-                    element: <div>Home page</div>
+                    element: <Home />
                 },
             ],
         }
     ]
 
-    const router = createBrowserRouter([
+    const router = createBrowserRouter([{
+        path: "/", 
+        element: <NavbarWrapper />,
+        children: [
         ...publicRoutes,
         ...authenticatedRoutes,
-    ]);
+        ],
+    }]);
     
-    return <RouterProvider router={router} />; 
+    return <RouterProvider router={router} />
 };

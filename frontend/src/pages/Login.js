@@ -1,22 +1,19 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
-import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
-    const login = useLogin(); 
-    const navigate = useNavigate(); 
+    const { login, error, isLoading }= useLogin(); 
 
     async function handleSubmit(e) {
         e.preventDefault();
         
         await login(username, password); 
-        navigate("/"); 
     }
 
     return (
-        <form method="post" onSubmit={handleSubmit}>
+        <form className="login" method="post" onSubmit={handleSubmit}>
             <h3>Login</h3>
             <label>Email: </label>
             <input
@@ -32,9 +29,10 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button>
+            <button disabled={isLoading}>
                 Login
             </button>
+            {error && <div>{error}</div>}
         </form>
     )
 }
