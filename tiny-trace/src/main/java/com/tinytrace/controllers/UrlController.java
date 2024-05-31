@@ -24,41 +24,38 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 public class UrlController {
-   
+
     private final UrlService urlService;
     private final UrlModelAssembler urlModelAssembler;
 
-    @GetMapping("/urls")
+    @GetMapping("/api/urls")
     public ResponseEntity<CollectionModel<EntityModel<Url>>> getAllUrls() {
         // todo: if admin ever came in, we would need to check if the user is an admin
         List<EntityModel<Url>> urls = urlService.findByUserId()
-            .map(urlModelAssembler::toModel)
-            .collect(Collectors.toList());
+                .map(urlModelAssembler::toModel)
+                .collect(Collectors.toList());
         CollectionModel<EntityModel<Url>> collectionModel = CollectionModel
-            .of(urls, linkTo(
-                methodOn(UrlController.class).getAllUrls()).withSelfRel()
-            );
-        return ResponseEntity.ok().body(collectionModel); 
+                .of(urls, linkTo(
+                        methodOn(UrlController.class).getAllUrls()).withSelfRel());
+        return ResponseEntity.ok().body(collectionModel);
     }
 
-    // todo: change the id collection name to be users instead more clear
-    @GetMapping("/urls/id/{id}") 
+    @GetMapping("/api/urls/{id}")
     public ResponseEntity<EntityModel<Url>> getUrlById(@PathVariable String id) {
-        Url url = urlService.findById(id); 
-        return ResponseEntity.ok().body(urlModelAssembler.toModel(url)); 
+        Url url = urlService.findById(id);
+        return ResponseEntity.ok().body(urlModelAssembler.toModel(url));
     }
 
-    @GetMapping("/urls/{shortUrl}")
-    public ResponseEntity<EntityModel<Url>> getUrlByShortUrl(@PathVariable String shortUrl) {
+    @GetMapping("/api/urls/")
+    public ResponseEntity<EntityModel<Url>> getUrlByShortUrl(@RequestParam String shortUrl) {
         Url url = urlService.findByShortUrl(shortUrl);
         return ResponseEntity.ok().body(urlModelAssembler.toModel(url));
     }
-    
 
-    @PostMapping("/urls") 
+    @PostMapping("/api/urls")
     public ResponseEntity<EntityModel<Url>> createUrl(@RequestBody Url url) {
-        Url newUrl = urlService.createUrl(url); 
-        return ResponseEntity.ok().body(urlModelAssembler.toModel(newUrl)); 
+        Url newUrl = urlService.createUrl(url);
+        return ResponseEntity.ok().body(urlModelAssembler.toModel(newUrl));
     }
-    
+
 }
