@@ -2,8 +2,11 @@ package com.tinytrace.exceptions;
 
 import java.util.stream.Collectors;
 
+import javax.naming.AuthenticationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +35,13 @@ public class GlobalExcetionHandler {
     public ResponseEntity<ErrorResponse> handleUrlNotFoundException(UrlNotFoundException e) {
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(BadCredentialsException e) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), 
+            String.format("%s: Invalid Password", e.getMessage()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
