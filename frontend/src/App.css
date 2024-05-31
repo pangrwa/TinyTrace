@@ -52,7 +52,7 @@ nav button {
 
 
 /* form */ 
-form.signup, form.login {
+form.signup, form.login, form.generate-shortUrl {
     max-width: 400px; 
     margin: 40px auto;
     padding: 20px;
