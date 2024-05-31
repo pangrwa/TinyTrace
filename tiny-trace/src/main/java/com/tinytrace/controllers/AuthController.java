@@ -14,6 +14,9 @@ import com.tinytrace.dto.SignupRequest;
 import com.tinytrace.models.User;
 import com.tinytrace.services.AuthService;
 import com.tinytrace.services.JwtService;
+
+import jakarta.validation.Valid;
+
 import com.tinytrace.assembler.AuthModelAssembler;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +28,7 @@ public class AuthController {
     private final JwtService jwtService;
     private final AuthModelAssembler authModelAssembler; 
 
-    @PostMapping("/auth/login") 
+    @PostMapping("/api/auth/login") 
     public ResponseEntity<EntityModel<AuthenticationResponse>> login(@RequestBody LoginRequest loginRequest) {
         User user = authService.handleLogin(loginRequest);
         UserDetails userDetails = new SecurityUser(user);
@@ -34,8 +37,8 @@ public class AuthController {
         return ResponseEntity.ok().body(authModelAssembler.toModel(authResponse));
     }    
 
-    @PostMapping("/auth/signup") 
-    public ResponseEntity<EntityModel<AuthenticationResponse>> signup(@RequestBody SignupRequest signupRequest) {
+    @PostMapping("/api/auth/signup") 
+    public ResponseEntity<EntityModel<AuthenticationResponse>> signup(@Valid @RequestBody SignupRequest signupRequest) {
         User user = authService.handleSignup(signupRequest); 
         UserDetails userDetails = new SecurityUser(user);
         String jwt = jwtService.generateToken(userDetails);
