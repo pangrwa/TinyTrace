@@ -50,7 +50,11 @@ dependencies {
 
 	// mongodb
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	
+	// validation
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.2.Final'
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
