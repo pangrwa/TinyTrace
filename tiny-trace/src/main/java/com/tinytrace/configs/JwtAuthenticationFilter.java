@@ -30,36 +30,37 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor // any final attribute will be injected by Lombok
-public class JwtAuthenticationFilter extends OncePerRequestFilter{
-    
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService; 
-    //private final AuthenticationManager authenticationManager; 
-    
+    private final UserDetailsService userDetailsService;
+    // private final AuthenticationManager authenticationManager;
+
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization"); 
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
+        final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-            return; 
+            return;
         }
         jwt = authHeader.substring(7); // after "Bearer "
-        userEmail = jwtService.extractUsername(jwt); 
+        userEmail = jwtService.extractUsername(jwt);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);             
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()); 
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
+                        null, userDetails.getAuthorities());
                 authToken.setDetails(
-                    new WebAuthenticationDetailsSource().buildDetails(request) 
-                );
-                ///Authentication auth = authenticationManager.authenticate(authToken); 
+                        new WebAuthenticationDetailsSource().buildDetails(request));
+                /// Authentication auth = authenticationManager.authenticate(authToken);
                 SecurityContextHolder.getContext().setAuthentication(authToken);
                 SecurityContext sc = SecurityContextHolder.getContext();
-                System.out.println(sc); 
-                System.out.println(sc.getAuthentication()); 
+                System.out.println(sc);
+                System.out.println(sc.getAuthentication());
             }
             // AuthorizationFilter
         }

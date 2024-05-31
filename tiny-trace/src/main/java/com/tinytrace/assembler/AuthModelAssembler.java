@@ -15,16 +15,16 @@ import com.tinytrace.controllers.UrlController;
 
 @Component
 @AllArgsConstructor
-public class AuthModelAssembler implements RepresentationModelAssembler<AuthenticationResponse, EntityModel<AuthenticationResponse>> {
-    private final JwtService jwtService; 
+public class AuthModelAssembler
+        implements RepresentationModelAssembler<AuthenticationResponse, EntityModel<AuthenticationResponse>> {
+    private final JwtService jwtService;
 
     @Override
     public EntityModel<AuthenticationResponse> toModel(AuthenticationResponse authResponse) {
         return EntityModel.of(authResponse,
-            linkTo(
-                methodOn(UrlController.class).getUrlById(jwtService.extractUsername(authResponse.jwt()))
-            ).withRel("urls")
-        );
+                linkTo(
+                        methodOn(UrlController.class).getUrlById(jwtService.extractUsername(authResponse.jwt())))
+                        .withRel("urls"));
     }
 
 }
