@@ -14,12 +14,12 @@ public class Url {
     
     private String id; 
     @Indexed(unique=true) 
-    private String shortUrl; 
+    private String shortUrlId; 
     private String longUrl;
     private String userId; 
     
-    public Url(String shortUrl, String longUrl, String userId) {
-        this.shortUrl = shortUrl;
+    public Url(String shortUrlId, String longUrl, String userId) {
+        this.shortUrlId = shortUrlId;
         this.longUrl = longUrl;
         this.userId = userId;   
     }
@@ -34,7 +34,7 @@ public class Url {
         } 
         Url url = (Url) o; 
         return Objects.equals(id, url.id) &&
-            Objects.equals(shortUrl, url.shortUrl) &&
+            Objects.equals(shortUrlId, url.shortUrlId) &&
             Objects.equals(longUrl, url.longUrl) &&  
             Objects.equals(userId, url.userId);   
     }
@@ -42,7 +42,7 @@ public class Url {
     @Override
     public String toString() {
         return String.format(
-            "Url{id=%s, shortUrl=%s, longUrl=%s, userId=%s}", id, shortUrl, longUrl, userId 
+            "Url{id=%s, shortUrlId=%s, longUrl=%s, userId=%s}", id, shortUrlId, longUrl, userId 
         );
     }
 }

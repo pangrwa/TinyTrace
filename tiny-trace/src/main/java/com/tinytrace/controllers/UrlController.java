@@ -47,8 +47,8 @@ public class UrlController {
     }
 
     @GetMapping("/api/urls/")
-    public ResponseEntity<EntityModel<Url>> getUrlByShortUrl(@RequestParam String shortUrl) {
-        Url url = urlService.findByShortUrl(shortUrl);
+    public ResponseEntity<EntityModel<Url>> getUrlByShortUrl(@RequestParam String shortUrlId) {
+        Url url = urlService.findByShortUrl(shortUrlId);
         return ResponseEntity.ok().body(urlModelAssembler.toModel(url));
     }
 

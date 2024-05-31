@@ -3,9 +3,6 @@ package com.tinytrace.services;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.tinytrace.models.Url;
@@ -18,45 +15,41 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class UrlService {
-    
+
     private final UrlShorterningService urlShorterningService;
     private final UserService userService;
     private final AuthService authService;
-    private final UrlRepository urlRepository; 
+    private final UrlRepository urlRepository;
 
     public Url findById(String id) {
-        return urlRepository.findById(id).orElseThrow(() -> new UrlNotFoundException(id)); 
-    } 
+        return urlRepository.findById(id).orElseThrow(() -> new UrlNotFoundException(id));
+    }
 
-    public Url findByShortUrl(String shortUrl) {
-        return urlRepository.findByShortUrl(shortUrl).orElseThrow(
-            () -> new UrlNotFoundException(shortUrl)
-        );
+    public Url findByShortUrl(String shortUrlId) {
+        return urlRepository.findByShortUrl(shortUrlId).orElseThrow(
+                () -> new UrlNotFoundException(shortUrlId));
     }
 
     public Stream<Url> findByUserId() {
-        String username = authService.getUserDetails().getUsername(); 
+        String username = authService.getUserDetails().getUsername();
         String userId = userService.findByUsername(username).getId();
         return StreamSupport.stream(
-            urlRepository.findByUserId(userId).spliterator(), false
-        );
+                urlRepository.findByUserId(userId).spliterator(), false);
     }
 
     public Stream<Url> findAll() {
         return StreamSupport.stream(
-            urlRepository.findAll().spliterator(), false
-        ); 
+                urlRepository.findAll().spliterator(), false);
     }
 
     public Url createUrl(Url url) {
-        String shortUrl = urlShorterningService.getShortUrl();
+        String shortUrlId = urlShorterningService.getShortUrl();
         String username = authService.getUserDetails().getUsername();
-        User user = userService.findByUsername(username);  
+        User user = userService.findByUsername(username);
         Url newUrl = new Url(
-            shortUrl,
-            url.getLongUrl(),
-            user.getId()
-        );
-        return urlRepository.save(newUrl); 
+                shortUrlId,
+                url.getLongUrl(),
+                user.getId());
+        return urlRepository.save(newUrl);
     }
 }
