@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class SecurityUser implements UserDetails {
-    private final User user; 
+    private final User user;
 
     @Override
     public String getUsername() {
@@ -21,33 +21,33 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword(); 
+        return user.getPassword();
     }
 
-    // todo: implement the following methods below 
+    // todo: implement the following methods below
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
-        //return List.of(new SimpleGrantedAuthority("USER"));
+        // return List.of(new SimpleGrantedAuthority("USER"));
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; 
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true; 
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; 
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return true; 
+        return true;
     }
 }
