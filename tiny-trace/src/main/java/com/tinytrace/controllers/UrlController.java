@@ -41,6 +41,7 @@ public class UrlController {
         return ResponseEntity.ok().body(collectionModel); 
     }
 
+    // todo: change the id collection name to be users instead more clear
     @GetMapping("/urls/id/{id}") 
     public ResponseEntity<EntityModel<Url>> getUrlById(@PathVariable String id) {
         Url url = urlService.findById(id); 

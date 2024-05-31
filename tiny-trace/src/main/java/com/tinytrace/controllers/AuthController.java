@@ -1,5 +1,6 @@
 package com.tinytrace.controllers;
 
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import com.tinytrace.dto.SignupRequest;
 import com.tinytrace.models.User;
 import com.tinytrace.services.AuthService;
 import com.tinytrace.services.JwtService;
+import com.tinytrace.assembler.AuthModelAssembler;
 
 import lombok.AllArgsConstructor;
 
@@ -21,22 +23,23 @@ import lombok.AllArgsConstructor;
 public class AuthController {
     private final AuthService authService;
     private final JwtService jwtService;
+    private final AuthModelAssembler authModelAssembler; 
 
     @PostMapping("/auth/login") 
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<EntityModel<AuthenticationResponse>> login(@RequestBody LoginRequest loginRequest) {
         User user = authService.handleLogin(loginRequest);
         UserDetails userDetails = new SecurityUser(user);
         String jwt = jwtService.generateToken(userDetails);
         AuthenticationResponse authResponse = new AuthenticationResponse(jwt);
-        return ResponseEntity.ok(authResponse);
+        return ResponseEntity.ok().body(authModelAssembler.toModel(authResponse));
     }    
 
     @PostMapping("/auth/signup") 
-    public ResponseEntity<AuthenticationResponse> signup(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<EntityModel<AuthenticationResponse>> signup(@RequestBody SignupRequest signupRequest) {
         User user = authService.handleSignup(signupRequest); 
         UserDetails userDetails = new SecurityUser(user);
         String jwt = jwtService.generateToken(userDetails);
         AuthenticationResponse authResponse = new AuthenticationResponse(jwt); 
-        return ResponseEntity.ok(authResponse);
+        return ResponseEntity.ok().body(authModelAssembler.toModel(authResponse));
     }
 }
