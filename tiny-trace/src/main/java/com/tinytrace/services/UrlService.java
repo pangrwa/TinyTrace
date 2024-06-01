@@ -30,6 +30,15 @@ public class UrlService {
         return urlRepository.findByShortUrlId(shortUrlId).orElseThrow(
                 () -> new UrlNotFoundException(shortUrlId));
     }
+    
+    public Stream<Url> findByUser() {
+        String authUsername = authService.getUserDetails().getUsername();
+        String authUserId = userService.findByUsername(authUsername).getId();
+
+        return StreamSupport.stream(
+                urlRepository.findByUserId(authUserId).spliterator(), false
+        );
+    }
 
     public Stream<Url> findByUserId(String userId) {
         String authUsername = authService.getUserDetails().getUsername();
