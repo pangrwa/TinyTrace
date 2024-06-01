@@ -26,8 +26,8 @@ public class UrlService {
         return urlRepository.findById(id).orElseThrow(() -> new UrlNotFoundException(id));
     }
 
-    public Url findByShortUrl(String shortUrlId) {
-        return urlRepository.findByShortUrl(shortUrlId).orElseThrow(
+    public Url findByShortUrlId(String shortUrlId) {
+        return urlRepository.findByShortUrlId(shortUrlId).orElseThrow(
                 () -> new UrlNotFoundException(shortUrlId));
     }
 
@@ -59,5 +59,9 @@ public class UrlService {
                 urlRequest.longUrl(),
                 user.getId());
         return urlRepository.save(newUrl);
+    }
+
+    public boolean existsByShortUrlId(String shortUrlId) {
+        return urlRepository.existsByShortUrlId(shortUrlId);
     }
 }
