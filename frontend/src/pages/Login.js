@@ -32,7 +32,7 @@ export default function Login() {
             <button disabled={isLoading}>
                 Login
             </button>
-            {error && <div>{error}</div>}
+            {error && <div className="error">{error}</div>}
         </form>
     )
 }

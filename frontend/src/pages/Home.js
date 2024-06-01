@@ -1,34 +1,52 @@
-import { useState } from "react";
-import { useCreateShortUrl } from "../hooks/useCreateShortUrl";
-import { useLogout } from "../hooks/useLogout";
+import { useEffect, useState } from "react";
+import UrlForm from "../components/UrlForm";
+import { useAuth } from "../contexts/AuthContext";
+import UrlDetails from "../components/UrlDetails";
 
 export default function Home() {
 
-    const [longUrl, setLongUrl] = useState(""); 
-    const { createShortUrl, shortUrl }= useCreateShortUrl(); 
+    const { token } = useAuth(); 
+    const [error, setError] = useState(null); 
+    const [urls, setUrls] = useState([]); 
+    
+    useEffect(() => {
+        const fetchUrls = async() => {
+            const requestOptions = {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Beare ${token}`
+                }
+            }; 
+            try {
+                const response = await fetch('api/urls/users/', requestOptions)
+                const body = await response.json(); 
+                
+                if (!response.ok) {
+                    setError(body.message); 
+                } else {
+                    // not sure what the field is actually
+                    setUrls(body.urls); 
+                    setError(null);
+                }
+            } catch(e) {
+                setError("Server is done. Please try again later."); 
+            }
+        }
 
-    async function handleSubmit(e) {
-        e.preventDefault(); 
-
-        await createShortUrl(longUrl); 
-    }
+        if (token) {
+            fetchUrls(); 
+        }
+    }, [token]); 
 
     return (
-        <form className="generate-shortUrl" method="post" onSubmit={handleSubmit}>
-            <h3>Generate shortUrl</h3>
-            
-            <label>LongUrl</label>
-            <input type="text" placeholder="Enter longUrl" onChange={(e) => setLongUrl(e.target.value)} />
-
-            <div>
-                {shortUrl && (
-                    <div>ShortUrl: <a href={shortUrl}>{shortUrl}</a></div>
-                )}
+        <div className="home-page">
+            <div className="urls">
+                {!error && urls && urls.map((url) => (
+                    <UrlDetails key={url.id} url={url} />
+                ))}
+                {error && <div className="error">{error}</div>}
             </div>
-
-            <button>
-                Generate 
-            </button>
-        </form>
+            <UrlForm />
+        </div>
     );
 }

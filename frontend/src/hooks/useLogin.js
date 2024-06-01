@@ -13,26 +13,33 @@ export function useLogin() {
     async function login(username, password) {
         setIsLoading(true); 
         setError(null); 
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            }); 
+            // contains the jwt
+            const json = await response.json(); 
 
-        const response = await fetch('/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        }); 
-
-        // contains the jwt
-        const json = await response.json(); 
-
-        if (!response.ok) {
+            if (!response.ok) {
+                setIsLoading(false); 
+                setError(json.message); 
+            } else {
+                setError(null); 
+                setToken(json.jwt); 
+                setIsLoading(false); 
+                navigate("/"); 
+            }
+        } catch (e) {
+            // server is probably down at this point
+            // response body can't pe parsed into JSON
             setIsLoading(false); 
-            setError(json.message); 
-        } else {
-            setToken(json.jwt); 
-            setIsLoading(false); 
-            navigate("/"); 
+            setError("Server is down. Please try again later."); 
         }
+        
     }
 
     return { login, error, isLoading };

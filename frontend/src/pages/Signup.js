@@ -6,7 +6,7 @@ export default function Signup() {
     const [email, setEmail] = useState(""); 
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
-    const signup = useSignup(); 
+    const { signup, error, isLoading }= useSignup(); 
 
     async function handleSubmit(e) {
         e.preventDefault(); 
@@ -38,9 +38,10 @@ export default function Signup() {
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button>
+            <button disabled={isLoading}>
                 Signup
             </button>
+            {error && <div className="error">{error}</div>}
 
         </form>
     )
