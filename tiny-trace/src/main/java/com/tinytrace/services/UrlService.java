@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.tinytrace.models.Url;
 import com.tinytrace.models.User;
 import com.tinytrace.repositories.UrlRepository;
+import com.tinytrace.dto.UrlRequest;
 import com.tinytrace.exceptions.urls.UrlNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -30,9 +31,16 @@ public class UrlService {
                 () -> new UrlNotFoundException(shortUrlId));
     }
 
-    public Stream<Url> findByUserId() {
-        String username = authService.getUserDetails().getUsername();
-        String userId = userService.findByUsername(username).getId();
+    public Stream<Url> findByUserId(String userId) {
+        String authUsername = authService.getUserDetails().getUsername();
+        String authUserId = userService.findByUsername(authUsername).getId();
+        
+        // shouldn't happen because the jwtService should have should have caught this in filters
+        if (!authUserId.equals(userId)) { 
+            // create custom exception?
+            // maybe add an assert instead 
+            throw new IllegalArgumentException("User not authorized to view this resource.");
+        }
         return StreamSupport.stream(
                 urlRepository.findByUserId(userId).spliterator(), false);
     }
@@ -42,13 +50,13 @@ public class UrlService {
                 urlRepository.findAll().spliterator(), false);
     }
 
-    public Url createUrl(Url url) {
+    public Url createUrl(UrlRequest urlRequest) {
         String shortUrlId = urlShorterningService.getShortUrl();
         String username = authService.getUserDetails().getUsername();
         User user = userService.findByUsername(username);
         Url newUrl = new Url(
                 shortUrlId,
-                url.getLongUrl(),
+                urlRequest.longUrl(),
                 user.getId());
         return urlRepository.save(newUrl);
     }
