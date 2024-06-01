@@ -4,7 +4,6 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -19,12 +18,12 @@ public class UrlValidator implements ConstraintValidator<UrlConstraint, String> 
             return false; 
         }
         try {
-            new URL(url);
+            new URL(url).toURI(); 
             return true; 
         } catch (MalformedURLException e) {
             return false;
-        //} catch (URISyntaxException e) {
-        //    return false; 
+        } catch (URISyntaxException e) {
+            return false; 
         }
     }
 }
