@@ -3,22 +3,28 @@ package com.tinytrace.services;
 import java.util.Base64;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.backoff.ExponentialBackOff;
 
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class UrlShorterningService {
 
     public static final int SHORT_URL_LENGTH = 7;
     public static final int BASE_64_LENGTH = 64;
     public static final int MAX_RETRIES = 10;
     private static final String BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    private UrlService urlService; 
 
-    private final UrlService urlService;
-
+    // prevent circular dependency by lazy loading
+    @Autowired
+    public void setUrlService(@Lazy UrlService urlService) {
+        this.urlService = urlService;
+    }
+    
     public String getShortUrl() {
         // random string for now just to test api
         String shortUrl = createRandomString();
