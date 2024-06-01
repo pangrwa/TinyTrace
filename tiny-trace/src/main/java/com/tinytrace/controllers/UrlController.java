@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tinytrace.models.Url;
 import com.tinytrace.services.UrlService;
+
+import jakarta.validation.Valid;
+
 import com.tinytrace.assembler.UrlModelAssembler;
 import com.tinytrace.dto.UrlRequest;
 
@@ -55,7 +58,7 @@ public class UrlController {
     }
 
     @GetMapping("/api/urls/users/{user-id}")
-    public ResponseEntity<CollectionModel<EntityModel<Url>>> getUrlByUserId(@PathVariable String userId) {
+    public ResponseEntity<CollectionModel<EntityModel<Url>>> getUrlByUserId(@PathVariable("user-id") String userId) {
         List<EntityModel<Url>> urls = urlService.findByUserId(userId)
                 .map(urlModelAssembler::toModel)
                 .collect(Collectors.toList());
@@ -66,7 +69,7 @@ public class UrlController {
     }
 
     @PostMapping("/api/urls")
-    public ResponseEntity<EntityModel<Url>> createUrl(@RequestBody UrlRequest urlRequest) {
+    public ResponseEntity<EntityModel<Url>> createUrl(@Valid @RequestBody UrlRequest urlRequest) {
         Url newUrl = urlService.createUrl(urlRequest);
         return ResponseEntity.ok().body(urlModelAssembler.toModel(newUrl));
     }

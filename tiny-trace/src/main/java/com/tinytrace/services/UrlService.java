@@ -27,7 +27,7 @@ public class UrlService {
     }
 
     public Url findByShortUrl(String shortUrlId) {
-        return urlRepository.findByShortUrl(shortUrlId).orElseThrow(
+        return urlRepository.findByShortUrlId(shortUrlId).orElseThrow(
                 () -> new UrlNotFoundException(shortUrlId));
     }
 
