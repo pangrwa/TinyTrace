@@ -17,47 +17,60 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tinytrace.models.Url;
 import com.tinytrace.services.UrlService;
+
+import jakarta.validation.Valid;
+
 import com.tinytrace.assembler.UrlModelAssembler;
+import com.tinytrace.dto.UrlRequest;
 
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 public class UrlController {
-   
+
     private final UrlService urlService;
     private final UrlModelAssembler urlModelAssembler;
 
-    @GetMapping("/urls")
-    public ResponseEntity<CollectionModel<EntityModel<Url>>> getAllUrls() {
-        // todo: if admin ever came in, we would need to check if the user is an admin
-        List<EntityModel<Url>> urls = urlService.findByUserId()
-            .map(urlModelAssembler::toModel)
-            .collect(Collectors.toList());
-        CollectionModel<EntityModel<Url>> collectionModel = CollectionModel
-            .of(urls, linkTo(
-                methodOn(UrlController.class).getAllUrls()).withSelfRel()
-            );
-        return ResponseEntity.ok().body(collectionModel); 
-    }
+    // @GetMapping("/api/urls")
+    // public ResponseEntity<CollectionModel<EntityModel<Url>>> getAllUrls() {
+    // // todo: if admin ever came in, we would need to check if the user is an
+    // admin
+    // List<EntityModel<Url>> urls = urlService.findByUserId()
+    // .map(urlModelAssembler::toModel)
+    // .collect(Collectors.toList());
+    // CollectionModel<EntityModel<Url>> collectionModel = CollectionModel
+    // .of(urls, linkTo(
+    // methodOn(UrlController.class).getAllUrls()).withSelfRel());
+    // return ResponseEntity.ok().body(collectionModel);
+    // }
 
-    @GetMapping("/urls/id/{id}") 
+    @GetMapping("/api/urls/{id}")
     public ResponseEntity<EntityModel<Url>> getUrlById(@PathVariable String id) {
-        Url url = urlService.findById(id); 
-        return ResponseEntity.ok().body(urlModelAssembler.toModel(url)); 
-    }
-
-    @GetMapping("/urls/{shortUrl}")
-    public ResponseEntity<EntityModel<Url>> getUrlByShortUrl(@PathVariable String shortUrl) {
-        Url url = urlService.findByShortUrl(shortUrl);
+        Url url = urlService.findById(id);
         return ResponseEntity.ok().body(urlModelAssembler.toModel(url));
     }
-    
 
-    @PostMapping("/urls") 
-    public ResponseEntity<EntityModel<Url>> createUrl(@RequestBody Url url) {
-        Url newUrl = urlService.createUrl(url); 
-        return ResponseEntity.ok().body(urlModelAssembler.toModel(newUrl)); 
+    @GetMapping("/api/urls/")
+    public ResponseEntity<EntityModel<Url>> getUrlByShortUrl(@RequestParam String shortUrlId) {
+        Url url = urlService.findByShortUrlId(shortUrlId);
+        return ResponseEntity.ok().body(urlModelAssembler.toModel(url));
     }
-    
+
+    @GetMapping("/api/urls/users/{user-id}")
+    public ResponseEntity<CollectionModel<EntityModel<Url>>> getUrlByUserId(@PathVariable("user-id") String userId) {
+        List<EntityModel<Url>> urls = urlService.findByUserId(userId)
+                .map(urlModelAssembler::toModel)
+                .collect(Collectors.toList());
+        CollectionModel<EntityModel<Url>> collectionModel = CollectionModel
+                .of(urls, linkTo(
+                        methodOn(UrlController.class).getUrlByUserId(userId)).withSelfRel());
+        return ResponseEntity.ok().body(collectionModel);
+    }
+
+    @PostMapping("/api/urls")
+    public ResponseEntity<EntityModel<Url>> createUrl(@Valid @RequestBody UrlRequest urlRequest) {
+        Url newUrl = urlService.createUrl(urlRequest);
+        return ResponseEntity.ok().body(urlModelAssembler.toModel(newUrl));
+    }
 }

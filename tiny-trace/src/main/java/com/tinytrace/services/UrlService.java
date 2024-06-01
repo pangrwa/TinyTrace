@@ -3,14 +3,12 @@ package com.tinytrace.services;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.tinytrace.models.Url;
 import com.tinytrace.models.User;
 import com.tinytrace.repositories.UrlRepository;
+import com.tinytrace.dto.UrlRequest;
 import com.tinytrace.exceptions.urls.UrlNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -18,45 +16,52 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class UrlService {
-    
+
     private final UrlShorterningService urlShorterningService;
     private final UserService userService;
     private final AuthService authService;
-    private final UrlRepository urlRepository; 
+    private final UrlRepository urlRepository;
 
     public Url findById(String id) {
-        return urlRepository.findById(id).orElseThrow(() -> new UrlNotFoundException(id)); 
-    } 
-
-    public Url findByShortUrl(String shortUrl) {
-        return urlRepository.findByShortUrl(shortUrl).orElseThrow(
-            () -> new UrlNotFoundException(shortUrl)
-        );
+        return urlRepository.findById(id).orElseThrow(() -> new UrlNotFoundException(id));
     }
 
-    public Stream<Url> findByUserId() {
-        String username = authService.getUserDetails().getUsername(); 
-        String userId = userService.findByUsername(username).getId();
+    public Url findByShortUrlId(String shortUrlId) {
+        return urlRepository.findByShortUrlId(shortUrlId).orElseThrow(
+                () -> new UrlNotFoundException(shortUrlId));
+    }
+
+    public Stream<Url> findByUserId(String userId) {
+        String authUsername = authService.getUserDetails().getUsername();
+        String authUserId = userService.findByUsername(authUsername).getId();
+        
+        // shouldn't happen because the jwtService should have should have caught this in filters
+        if (!authUserId.equals(userId)) { 
+            // create custom exception?
+            // maybe add an assert instead 
+            throw new IllegalArgumentException("User not authorized to view this resource.");
+        }
         return StreamSupport.stream(
-            urlRepository.findByUserId(userId).spliterator(), false
-        );
+                urlRepository.findByUserId(userId).spliterator(), false);
     }
 
     public Stream<Url> findAll() {
         return StreamSupport.stream(
-            urlRepository.findAll().spliterator(), false
-        ); 
+                urlRepository.findAll().spliterator(), false);
     }
 
-    public Url createUrl(Url url) {
-        String shortUrl = urlShorterningService.getShortUrl();
+    public Url createUrl(UrlRequest urlRequest) {
+        String shortUrlId = urlShorterningService.getShortUrl();
         String username = authService.getUserDetails().getUsername();
-        User user = userService.findByUsername(username);  
+        User user = userService.findByUsername(username);
         Url newUrl = new Url(
-            shortUrl,
-            url.getLongUrl(),
-            user.getId()
-        );
-        return urlRepository.save(newUrl); 
+                shortUrlId,
+                urlRequest.longUrl(),
+                user.getId());
+        return urlRepository.save(newUrl);
+    }
+
+    public boolean existsByShortUrlId(String shortUrlId) {
+        return urlRepository.existsByShortUrlId(shortUrlId);
     }
 }

@@ -2,19 +2,11 @@ package com.tinytrace.configs;
 
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.core.log.LogMessage;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -30,36 +22,36 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor // any final attribute will be injected by Lombok
-public class JwtAuthenticationFilter extends OncePerRequestFilter{
-    
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService; 
-    //private final AuthenticationManager authenticationManager; 
-    
+    private final UserDetailsService userDetailsService;
+
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization"); 
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
+        final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-            return; 
+            return;
         }
         jwt = authHeader.substring(7); // after "Bearer "
-        userEmail = jwtService.extractUsername(jwt); 
+        userEmail = jwtService.extractUsername(jwt);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);             
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()); 
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
+                        null, userDetails.getAuthorities());
                 authToken.setDetails(
-                    new WebAuthenticationDetailsSource().buildDetails(request) 
-                );
-                ///Authentication auth = authenticationManager.authenticate(authToken); 
+                        new WebAuthenticationDetailsSource().buildDetails(request));
+                /// Authentication auth = authenticationManager.authenticate(authToken);
                 SecurityContextHolder.getContext().setAuthentication(authToken);
                 SecurityContext sc = SecurityContextHolder.getContext();
-                System.out.println(sc); 
-                System.out.println(sc.getAuthentication()); 
+                System.out.println(sc);
+                System.out.println(sc.getAuthentication());
             }
             // AuthorizationFilter
         }
