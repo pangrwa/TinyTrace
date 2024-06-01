@@ -14,14 +14,10 @@ public class UrlModelAssembler implements RepresentationModelAssembler<Url, Enti
 
     @Override
     public EntityModel<Url> toModel(Url url) {
-        return EntityModel.of(url, 
-            linkTo(
-                methodOn(UrlController.class).getUrlById(url.getId())
-            ).withSelfRel(), 
-            linkTo(
-                methodOn(UrlController.class).getAllUrls()
-            ).withRel("urls")
-        );
+        return EntityModel.of(url,
+                linkTo(
+                        methodOn(UrlController.class).getUrlById(url.getId())).withSelfRel(),
+                linkTo(
+                        methodOn(UrlController.class).getUrlByUserId(url.getUserId())).withRel("urls"));
     }
-    
 }
