@@ -8,6 +8,7 @@ import Signup from "../pages/Signup";
 import Error from "../pages/Error"; 
 import PrivateRouter from "./PrivateRouter";
 import NavbarWrapper from "./NavbarWrapper";
+import Url from "../pages/Url";
 
 export default function Routes() {
     const publicRoutes = [
@@ -18,7 +19,7 @@ export default function Routes() {
         {
             path: "/signup",
             element: <Signup/>
-        }
+        },
     ]
 
     const authenticatedRoutes =[
@@ -34,7 +35,8 @@ export default function Routes() {
         }
     ]
 
-    const router = createBrowserRouter([{
+    const router = createBrowserRouter([
+    {
         path: "/", 
         element: <NavbarWrapper />,
         errorElement: <Error/>,
@@ -42,7 +44,12 @@ export default function Routes() {
         ...publicRoutes,
         ...authenticatedRoutes,
         ],
-    }]);
+    }, 
+    {
+        path: "/urls/:id",
+        element: <Url/>
+    }
+    ]);
     
     return <RouterProvider router={router} />
 };
