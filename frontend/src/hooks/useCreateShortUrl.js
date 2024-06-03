@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUrl } from "../contexts/UrlContext";
 
 
 export function useCreateShortUrl() {
     const [error, setError] = useState(""); 
     const [isLoading, setIsLoading] = useState(false); 
     const [shortUrl, setShortUrl] = useState(""); 
+    const { dispatch } = useUrl(); 
 
     const navigate = useNavigate(); 
 
@@ -30,6 +32,7 @@ export function useCreateShortUrl() {
                 setError(""); 
                 setIsLoading(false); 
                 buildShortUrl(body.shortUrlId);  
+                dispatch({ type: "CREATE_URL", payload: body }); 
                 navigate("/"); 
             }
         } catch(e) {

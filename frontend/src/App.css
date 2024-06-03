@@ -60,13 +60,17 @@ nav button {
 /* form */ 
 form.signup, form.login, form.generate-shortUrl {
     max-width: 400px; 
-    margin: 40px auto;
     padding: 20px;
+    margin: 40px auto; 
     border-radius: 4px; 
     background: #fff;
     display: flex; 
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+form.generate-shortUrl {
+    margin: 40px 150px 40px 40px;  
 }
 
 form button {
@@ -88,5 +92,31 @@ label, input {
 /* Home */ 
 .home-page {
     display: flex; 
-
+    justify-content: center;
+    align-items: flex-start;
 }
+
+/* get all the flex-items */ 
+.home-page > * {
+    flex: 1; 
+    margin: 20px; 
+}
+
+
+.urls {
+    margin: 40px; 
+    background-color: white; 
+    height: 100%;
+}
+/* Url details */ 
+.url-details { 
+    border-radius: 4px;
+    display: flex; 
+    flex-direction: column;
+    background-color: var(--primary);
+    margin: 20px ; 
+}
+
+.url-details > * {
+    margin: 20px; 
+} 
