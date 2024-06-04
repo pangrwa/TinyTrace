@@ -3,6 +3,8 @@ package com.tinytrace.services;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tinytrace.models.Url;
@@ -31,6 +33,13 @@ public class UrlService {
                 () -> new UrlNotFoundException(shortUrlId));
     }
     
+    public Page<Url> findByUser(Pageable pageable) {
+        String authUsername = authService.getUserDetails().getUsername();
+        String authUserId = userService.findByUsername(authUsername).getId();
+
+        return urlRepository.findByUserId(authUserId, pageable);
+    }
+
     public Stream<Url> findByUser() {
         String authUsername = authService.getUserDetails().getUsername();
         String authUserId = userService.findByUsername(authUsername).getId();

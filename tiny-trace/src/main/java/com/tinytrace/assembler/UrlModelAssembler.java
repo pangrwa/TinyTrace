@@ -2,6 +2,7 @@ package com.tinytrace.assembler;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,6 @@ public class UrlModelAssembler implements RepresentationModelAssembler<Url, Enti
                 linkTo(
                         methodOn(UrlController.class).getUrlById(url.getId())).withSelfRel(),
                 linkTo(
-                        methodOn(UrlController.class).getAllUrls()).withRel("urls"));
+                        methodOn(UrlController.class).getAllUrls(PageRequest.of(0, 20))).withRel("urls"));
     }
 }
