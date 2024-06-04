@@ -5,8 +5,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.RepresentationModelProcessorInvoker.CollectionModelProcessorWrapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,41 +39,29 @@ public class UrlController {
 
     private final UrlService urlService;
     private final UrlModelAssembler urlModelAssembler;
+    private final PagedResourcesAssembler<Url> pagedResourcesAssembler; 
 
     @GetMapping("/api/urls")
-    public ResponseEntity<CollectionModel<EntityModel<Url>>> getAllUrls() {
+    public ResponseEntity<PagedModel<EntityModel<Url>>> getAllUrls(
+        Pageable pageable
+    ) {
     // todo: if admin ever came in, we would need to check if the user is an admin
-    List<EntityModel<Url>> urls = urlService.findByUser() 
-            .map(urlModelAssembler::toModel)
-            .collect(Collectors.toList());
-            CollectionModel<EntityModel<Url>> collectionModel = CollectionModel
-            .of(urls, linkTo(
-            methodOn(UrlController.class).getAllUrls()).withSelfRel());
-    return ResponseEntity.ok().body(collectionModel);
+    // todo: consider the possiblity of just retrieving all the data if no pagination data is given
+    Page<Url> urls = urlService.findByUser(pageable); 
+    PagedModel<EntityModel<Url>> urlPagedModel = pagedResourcesAssembler.toModel(
+        urls, urlModelAssembler
+    );
+    return ResponseEntity.ok().contentType(MediaTypes.HAL_JSON).body(urlPagedModel);
     }
 
+
+    // have to fix case where shortUrlId last character is "/" which can cause it to go to a different endpoint
     @GetMapping("/api/urls/{shortUrlId}")
     public ResponseEntity<EntityModel<Url>> getUrlById(@PathVariable String shortUrlId) {
+        System.out.println(shortUrlId); 
         Url url = urlService.findByShortUrlId(shortUrlId);
         return ResponseEntity.ok().body(urlModelAssembler.toModel(url));
     }
-
-    @GetMapping("/api/urls/")
-    public ResponseEntity<EntityModel<Url>> getUrlByShortUrl(@RequestParam String shortUrlId) {
-        Url url = urlService.findByShortUrlId(shortUrlId);
-        return ResponseEntity.ok().body(urlModelAssembler.toModel(url));
-    }
-
-    //@GetMapping("/api/urls/users/{user-id}")
-    //public ResponseEntity<CollectionModel<EntityModel<Url>>> getUrlByUserId(@PathVariable("user-id") String userId) {
-    //    List<EntityModel<Url>> urls = urlService.findByUserId(userId)
-    //            .map(urlModelAssembler::toModel)
-    //            .collect(Collectors.toList());
-    //    CollectionModel<EntityModel<Url>> collectionModel = CollectionModel
-    //            .of(urls, linkTo(
-    //                    methodOn(UrlController.class).getUrlByUserId(userId)).withSelfRel());
-    //    return ResponseEntity.ok().body(collectionModel);
-    //}
 
     @PostMapping("/api/urls")
     public ResponseEntity<EntityModel<Url>> createUrl(@Valid @RequestBody UrlRequest urlRequest) {
