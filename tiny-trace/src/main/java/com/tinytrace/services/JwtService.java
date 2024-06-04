@@ -38,7 +38,7 @@ public class JwtService {
     }
     public String generateToken(Map<String, Object> claims, UserDetails UserDetails) { 
         return Jwts.builder()
-            .claims().empty().add(claims).subject(UserDetails.getUsername()).issuedAt(new Date(System.currentTimeMillis())).expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) // set for 24 hours
+            .claims().empty().add(claims).subject(UserDetails.getUsername()).issuedAt(new Date(System.currentTimeMillis())).expiration(new Date(System.currentTimeMillis() + (1000 * 60 * 10))) // set for 10 minutes 
             .and()
             .signWith(getSignInKey()).compact();
     }
