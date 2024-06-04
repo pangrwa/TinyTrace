@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.tinytrace.models.Url;
 
+// mongoRepo extends PagingandSortingRepo which auto implement methods that takes in Pageable
 public interface UrlRepository extends MongoRepository<Url, String> {
     
     Optional<Url> findByShortUrlId(String shortUrlId); 
