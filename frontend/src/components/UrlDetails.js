@@ -6,9 +6,9 @@ export default function UrlDetails({ url }) {
     }
 
     return (
-        <div className="url-details">
-            <p>{url.longUrl}</p>
-            <p>Short Url: <a href={url.longUrl}>{buildUrl(url.shortUrlId)}</a></p>
+        <div className="d-flex flex-column bg-light mx-3 my-3 rounded-1">
+            <p className="mx-3 my-3">{url.longUrl}</p>
+            <p className="mx-3 my-3">Short Url: <a href={url.longUrl}>{buildUrl(url.shortUrlId)}</a></p>
         </div>
     )
 }

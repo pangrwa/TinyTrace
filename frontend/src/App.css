@@ -14,7 +14,6 @@
 body {
     background: #f1f1f1; 
     margin: 0; 
-    font-family: 'Poppins', sans-serif;
 }
 
 /* nav bar */ 
@@ -62,7 +61,7 @@ form.signup, form.login, form.generate-shortUrl {
     max-width: 400px; 
     padding: 20px;
     margin: 40px auto; 
-    border-radius: 4px; 
+    border-radius: 10px; 
     background: #fff;
     display: flex; 
     flex-direction: column;
@@ -108,15 +107,4 @@ label, input {
     background-color: white; 
     height: 100%;
 }
-/* Url details */ 
-.url-details { 
-    border-radius: 4px;
-    display: flex; 
-    flex-direction: column;
-    background-color: var(--primary);
-    margin: 20px ; 
-}
 
-.url-details > * {
-    margin: 20px; 
-} 

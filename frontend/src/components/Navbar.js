@@ -8,24 +8,21 @@ export default function Navbar() {
 
     return (
         <header>
-            <div className="container">
-                <Link to="/">
-                    <h2>TinyTrace</h2>
-                </Link>
-                <nav>
-                    { token && (
-                        <div>
-                            <button onClick={()=>{ logout();}}>Logout</button>
-                        </div>
-                    )}
-                    { !token && (
-                        <div>
-                            <Link to="/login">Login</Link>
-                            <Link to="/signup">Signup</Link>
-                        </div>
-                    )}
-                </nav>
-            </div>
+            <nav className="navbar navbar-expand-lg bg-body-tertiary"> 
+                <div className="container-fluid">
+                    <Link to="/"><div className="navbar-brand">TinyTrace</div></Link>
+                        { !token &&(
+                            <div>
+                                <Link to="/login"><button className="btn btn-outline-primary">Login</button></Link>
+                                <Link to="/signup"><button className="btn btn-outline-primary">Signup</button></Link>
+                            </div>
+                        )}
+                        { token && (
+                            <button className="btn btn-outline-primary" onClick={() => logout()}>Logout</button>
+                        )}
+                </div>
+            </nav>
         </header>
-    )
+
+    );
 }

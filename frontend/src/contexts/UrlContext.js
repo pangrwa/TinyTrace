@@ -5,7 +5,6 @@ const UrlContext = createContext();
 const urlReducer = (state, action) => {
     switch (action.type) {
     case 'FETCH_URLS': {
-        console.log(action.payload)
         return action.payload;
     }
     case 'CREATE_URL': {

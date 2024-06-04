@@ -25,7 +25,6 @@ export function useSignup() {
 
             if (!response.ok) {
                 setIsLoading(false); 
-                console.log(json); 
                 setError(json.message); 
             } else {
                 setError(null); 

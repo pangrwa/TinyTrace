@@ -15,21 +15,23 @@ export default function Login() {
     return (
         <form className="login" method="post" onSubmit={handleSubmit}>
             <h3>Login</h3>
-            <label>Email: </label>
+            <label className="form-label">Username: </label>
             <input
+                className="form-control"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
 
-            <label>Password: </label>
+            <label className="form-label">Password: </label>
             <input
+                className="form-control"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button disabled={isLoading}>
+            <button className="btn btn-primary" disabled={isLoading}>
                 Login
             </button>
             {error && <div className="error">{error}</div>}
