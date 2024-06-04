@@ -46,9 +46,9 @@ public class UrlController {
     return ResponseEntity.ok().body(collectionModel);
     }
 
-    @GetMapping("/api/urls/{id}")
-    public ResponseEntity<EntityModel<Url>> getUrlById(@PathVariable String id) {
-        Url url = urlService.findById(id);
+    @GetMapping("/api/urls/{shortUrlId}")
+    public ResponseEntity<EntityModel<Url>> getUrlById(@PathVariable String shortUrlId) {
+        Url url = urlService.findByShortUrlId(shortUrlId);
         return ResponseEntity.ok().body(urlModelAssembler.toModel(url));
     }
 
