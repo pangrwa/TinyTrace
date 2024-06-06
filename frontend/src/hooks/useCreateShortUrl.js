@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUrl } from "../contexts/UrlContext";
+import { useAuth } from "../contexts/AuthContext";
 
 
 export function useCreateShortUrl() {
-    const [error, setError] = useState(""); 
+    const { token } = useAuth(); 
+    const { urlDispatcher, totalPagesDispatcher } = useUrl(); 
+
+    const [error, setError] = useState(null); 
     const [isLoading, setIsLoading] = useState(false); 
     const [shortUrl, setShortUrl] = useState(""); 
-    const { dispatch } = useUrl(); 
 
-    const navigate = useNavigate(); 
 
     async function createShortUrl(longUrl) {
         const customHeaders = new Headers(); 
@@ -28,13 +30,37 @@ export function useCreateShortUrl() {
             if (!response.ok) {
                 setIsLoading(false); 
                 setError(body.message); 
-            } else {
-                setError(""); 
+                return;
+            } 
+            setError(null); 
+            setIsLoading(false); 
+            buildShortUrl(body.shortUrlId);  
+            // prevent uncessary re-rendering from a different batch
+            // dispatch({ type: "CREATE_URL", payload: body }); 
+            
+            // updates the URL state to the correct pagination
+            const secondRequestOptions = {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+            const secondResponse = await fetch("/api/urls?size=5&page=0", secondRequestOptions)
+            const secondBody = await secondResponse.json(); 
+            
+            if (!secondResponse.ok) {
+                setError(secondBody.message);
                 setIsLoading(false); 
-                buildShortUrl(body.shortUrlId);  
-                dispatch({ type: "CREATE_URL", payload: body }); 
-                navigate("/"); 
+                return; 
             }
+            setError(null); 
+            setIsLoading(false); 
+            let urls = []
+            if (secondBody._embedded) {
+                urls = secondBody._embedded.urls;
+            }
+            urlDispatcher({ type: 'FETCH_URLS', payload: urls }); 
+            totalPagesDispatcher({ type: 'SET_TOTAL_PAGES', payload: secondBody.page.totalPages });
         } catch(e) {
             // server is probably down at this point
             // response body can't pe parsed into JSON

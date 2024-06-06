@@ -11,6 +11,7 @@ export default function UrlForm() {
 
         await createShortUrl(longUrl); 
     }
+
   return (
     <form className="generate-shortUrl" method="post" onSubmit={handleSubmit}>
       <h3>Generate short URL</h3>

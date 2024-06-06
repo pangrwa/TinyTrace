@@ -13,15 +13,31 @@ const urlReducer = (state, action) => {
     default: {
         return state; 
     }
-    
+    }
+}
+
+const totalPagesReducer = (state, action) => {
+    switch (action.type) {
+    case 'GET_TOTAL_PAGES': {
+        return state;
+    }
+    case 'SET_TOTAL_PAGES': {
+        return action.payload; 
+    }
+    default: {
+        return state; 
+    }
     }
 }
 
 const UrlProvider = ({ children }) => {
 
-    const [urls, dispatch] = useReducer(urlReducer, []);
+    const [urls, urlDispatcher] = useReducer(urlReducer, []);
+    const [totalPages, totalPagesDispatcher] = useReducer(totalPagesReducer, []);  
+
     const contextValue = {
-        urls, dispatch 
+        urls, urlDispatcher,
+        totalPages, totalPagesDispatcher
     }
 
     return (
