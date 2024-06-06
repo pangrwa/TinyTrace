@@ -2,14 +2,14 @@
 import { useState } from "react";
 import { useCreateShortUrl } from "../hooks/useCreateShortUrl";
 
-export default function UrlForm() {
+export default function UrlForm({ setCurrentPageNumber } ) {
     const [longUrl, setLongUrl] = useState(""); 
     const { createShortUrl, shortUrl, error, isLoading }= useCreateShortUrl(); 
 
     async function handleSubmit(e) {
         e.preventDefault(); 
 
-        await createShortUrl(longUrl); 
+        await createShortUrl(longUrl, setCurrentPageNumber); 
     }
 
   return (

@@ -14,9 +14,9 @@ export default function Home() {
         <div className="home-page">
             <div> 
                 <UrlTable currentPageNumber={currentPageNumber}/>
-                <Pagination currentPageNumber={currentPageNumber}/>
+                <Pagination pageState={{currentPageNumber, setCurrentPageNumber}}/>
             </div>
-            <UrlForm />
+            <UrlForm setCurrentPageNumber={setCurrentPageNumber}/>
         </div>
     );
 }

@@ -49,14 +49,13 @@ export default function UrlTable( { currentPageNumber }) {
         fetchUrls(); 
     }, [currentPageNumber, urlDispatcher, totalPagesDispatcher, token]);  
 
-    console.log(totalPages); 
     return (
-            <div className="urls">
+            <>
                 {!error && urls && urls.map((url) => (
-                    // work around till i expose ID in backend
-                    <UrlDetails key={url.shortUrlId} url={url} />
-                ))}
+                        // work around till i expose ID in backend
+                        <UrlDetails key={url.shortUrlId} url={url} />
+                    ))}
                 {error && <div className="error">{error}</div>}
-            </div>
+            </>
     )
 }

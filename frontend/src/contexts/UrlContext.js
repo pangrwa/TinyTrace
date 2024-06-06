@@ -33,7 +33,7 @@ const totalPagesReducer = (state, action) => {
 const UrlProvider = ({ children }) => {
 
     const [urls, urlDispatcher] = useReducer(urlReducer, []);
-    const [totalPages, totalPagesDispatcher] = useReducer(totalPagesReducer, []);  
+    const [totalPages, totalPagesDispatcher] = useReducer(totalPagesReducer, 0);  
 
     const contextValue = {
         urls, urlDispatcher,

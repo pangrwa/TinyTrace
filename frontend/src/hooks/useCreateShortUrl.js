@@ -5,6 +5,8 @@ import { useAuth } from "../contexts/AuthContext";
 
 
 export function useCreateShortUrl() {
+    const DEFAULT_PAGE_SIZE = 5; 
+
     const { token } = useAuth(); 
     const { urlDispatcher, totalPagesDispatcher } = useUrl(); 
 
@@ -13,7 +15,7 @@ export function useCreateShortUrl() {
     const [shortUrl, setShortUrl] = useState(""); 
 
 
-    async function createShortUrl(longUrl) {
+    async function createShortUrl(longUrl, setCurrentPageNumber) {
         const customHeaders = new Headers(); 
         customHeaders.append("Content-Type", "application/json"); 
         customHeaders.append("Authorization", `Bearer ${localStorage.getItem("token")}`); 
@@ -35,6 +37,7 @@ export function useCreateShortUrl() {
             setError(null); 
             setIsLoading(false); 
             buildShortUrl(body.shortUrlId);  
+            const pageNumber = Math.ceil(response.headers.get("X-Total-Count") / DEFAULT_PAGE_SIZE) - 1;  
             // prevent uncessary re-rendering from a different batch
             // dispatch({ type: "CREATE_URL", payload: body }); 
             
@@ -45,7 +48,7 @@ export function useCreateShortUrl() {
                     'Authorization': `Bearer ${token}`
                 }
             };
-            const secondResponse = await fetch("/api/urls?size=5&page=0", secondRequestOptions)
+            const secondResponse = await fetch(`/api/urls?size=${DEFAULT_PAGE_SIZE}&page=${pageNumber}`, secondRequestOptions)
             const secondBody = await secondResponse.json(); 
             
             if (!secondResponse.ok) {
@@ -61,6 +64,7 @@ export function useCreateShortUrl() {
             }
             urlDispatcher({ type: 'FETCH_URLS', payload: urls }); 
             totalPagesDispatcher({ type: 'SET_TOTAL_PAGES', payload: secondBody.page.totalPages });
+            setCurrentPageNumber(pageNumber); 
         } catch(e) {
             // server is probably down at this point
             // response body can't pe parsed into JSON

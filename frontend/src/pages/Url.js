@@ -17,7 +17,6 @@ export default function Url() {
                     setError(body.message); 
                 } else { 
                     setError(null); 
-                    console.log("HELLO")
                     window.location.href=body.longUrl;
                 }
             } catch (e) {
