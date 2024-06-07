@@ -24,6 +24,10 @@ public class UrlService {
     private final AuthService authService;
     private final UrlRepository urlRepository;
 
+    public long getTotalCount() {
+        return urlRepository.count();  
+    }
+
     public Url findById(String id) {
         return urlRepository.findById(id).orElseThrow(() -> new UrlNotFoundException(id));
     }
@@ -77,6 +81,12 @@ public class UrlService {
                 urlRequest.longUrl(),
                 user.getId());
         return urlRepository.save(newUrl);
+    }
+
+    public void deleteUrlbyShortUrlId(String shortUrlId) {
+        Url url = findByShortUrlId(shortUrlId); 
+        urlRepository.delete(url); 
+
     }
 
     public boolean existsByShortUrlId(String shortUrlId) {
