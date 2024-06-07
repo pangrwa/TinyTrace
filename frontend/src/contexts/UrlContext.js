@@ -16,28 +16,12 @@ const urlReducer = (state, action) => {
     }
 }
 
-const totalPagesReducer = (state, action) => {
-    switch (action.type) {
-    case 'GET_TOTAL_PAGES': {
-        return state;
-    }
-    case 'SET_TOTAL_PAGES': {
-        return action.payload; 
-    }
-    default: {
-        return state; 
-    }
-    }
-}
-
 const UrlProvider = ({ children }) => {
 
     const [urls, urlDispatcher] = useReducer(urlReducer, []);
-    const [totalPages, totalPagesDispatcher] = useReducer(totalPagesReducer, 0);  
 
     const contextValue = {
         urls, urlDispatcher,
-        totalPages, totalPagesDispatcher
     }
 
     return (

@@ -1,23 +1,19 @@
 import { useEffect, useRef } from "react";
 import { useUrl } from "../contexts/UrlContext";
+import { usePage } from "../contexts/PageContext";
 
 /*
 PageNumber: 1-indexed number shown on front end
 currentPageNumber: 0-indexed number used in the backend
 */ 
-function PageDetail( { pageState, pageNumber } ) {
-    const { currentPageNumber, setCurrentPageNumber } = pageState; 
+function PageDetail( { pageNumber } ) {
+    const {
+        currentPageNumber, currentPageNumberDispatcher 
+    } = usePage();
     const isActivePage = currentPageNumber === pageNumber - 1;
-    const pageDetailRef = useRef(null);
 
-    useEffect(() => {
-        if (isActivePage && pageDetailRef.current) {
-            console.log("pageDetailREf is active"); 
-            pageDetailRef.current.focus(); 
-        }
-    }, [isActivePage]); 
     function handleSubmit() {
-        setCurrentPageNumber(pageNumber - 1); 
+        currentPageNumberDispatcher({ type: 'SET_CURRENT_PAGE_NUMBER', payload: pageNumber - 1} ); 
     } 
 
     return (
@@ -30,9 +26,11 @@ function PageDetail( { pageState, pageNumber } ) {
 }
 
 
-export default function Pagination({ pageState }) { 
-    const { totalPages } = useUrl(); 
-    const { currentPageNumber, setCurrentPageNumber } = pageState;
+export default function Pagination() { 
+    const { totalPages } = usePage(); 
+    const { 
+        currentPageNumber, currentPageNumberDispatcher
+    } = usePage();
 
     const isFirstPage = currentPageNumber === 0; 
     const isLastPage = currentPageNumber === totalPages - 1; 
@@ -49,15 +47,15 @@ export default function Pagination({ pageState }) {
                 <>
                     <li className="page-item">
                         <button className={`page-link ${isFirstPage ? "disabled" : ""}`} arial-label="Previous" disabled={isFirstPage}
-                            onClick={() => setCurrentPageNumber(currentPageNumber - 1)}
+                            onClick={() => currentPageNumberDispatcher({ type: 'SET_CURRENT_PAGE_NUMBER', payload: currentPageNumber - 1 })}
                         >
                             &laquo;
                         </button>
                     </li>
-                    <PageDetail pageState={pageState} pageNumber={1}/>
+                    <PageDetail pageNumber={1}/>
                 </>}
-                {2 < totalPages && <PageDetail pageState={pageState} pageNumber={2} />}
-                {3 < totalPages && <PageDetail pageState={pageState} pageNumber={3} />}
+                {2 < totalPages && <PageDetail pageNumber={2} />}
+                {3 < totalPages && <PageDetail pageNumber={3} />}
 
                 {/* These are to set ... if there is at least one page number in between FIRST_THRESHOLD and current number */} 
                 {   (FIRST_THRESHOLD + 1 < LAST_THRESHOLD) &&
@@ -71,13 +69,13 @@ export default function Pagination({ pageState }) {
                 
                 {/* These are to set the neighbouringe elements of the current page */}
                 {(FIRST_THRESHOLD < currentPageNumber - 1) && (currentPageNumber - 1 < LAST_THRESHOLD) &&
-                    <PageDetail pageState={pageState} pageNumber={currentPageNumber}/>
+                    <PageDetail pageNumber={currentPageNumber}/>
                 }
                 {(FIRST_THRESHOLD < currentPageNumber) && (currentPageNumber < LAST_THRESHOLD) &&
-                    <PageDetail pageState={pageState} pageNumber={currentPageNumber + 1} />
+                    <PageDetail pageNumber={currentPageNumber + 1} />
                 }
                 {(FIRST_THRESHOLD < currentPageNumber + 1) && (currentPageNumber + 1 < LAST_THRESHOLD) &&
-                    <PageDetail pageState={pageState} pageNumber={currentPageNumber + 2} />
+                    <PageDetail pageNumber={currentPageNumber + 2} />
                 }
 
                 {/* These are to set ... if there is at least one page number in between LAST_THRESHOLD and current number */} 
@@ -92,17 +90,17 @@ export default function Pagination({ pageState }) {
 
                 {/* These are to set the last 3 default page numbers if possible */}
                 {totalPages - 2 > FIRST_THRESHOLD && 
-                    <PageDetail pageState={pageState} pageNumber={totalPages - 2} />
+                    <PageDetail pageNumber={totalPages - 2} />
                 }
                 {totalPages - 1 > FIRST_THRESHOLD && 
-                    <PageDetail pageState={pageState} pageNumber={totalPages - 1}/>
+                    <PageDetail pageNumber={totalPages - 1}/>
                 }
                 {totalPages > 1 && 
                     <>
-                        <PageDetail pageState={pageState} pageNumber={totalPages} />
+                        <PageDetail pageNumber={totalPages} />
                         <li className="page-item">
                             <button className={`page-link ${isLastPage ? "disabled" : ""}`} arial-label="Next" disabled={isLastPage}
-                                onClick={() => setCurrentPageNumber(currentPageNumber + 1)}
+                                onClick={() => currentPageNumberDispatcher({ type: 'SET_CURRENT_PAGE_NUMBER', payload: currentPageNumber + 1})}
                             >
                                 &raquo;
                             </button>
