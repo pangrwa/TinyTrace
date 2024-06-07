@@ -40,8 +40,6 @@ export function useCreateShortUrl() {
             setError(null); 
             setIsLoading(false); 
             buildShortUrl(body.shortUrlId);  
-            console.log(body); 
-            console.log(response.headers.get("X-Total-Count"));
             const pageNumber = Math.ceil(response.headers.get("X-Total-Count") / DEFAULT_PAGE_SIZE) - 1;  
             // prevent uncessary re-rendering from a different batch
             // dispatch({ type: "CREATE_URL", payload: body }); 

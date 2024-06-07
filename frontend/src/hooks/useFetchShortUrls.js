@@ -20,7 +20,6 @@ export function useFetchShortUrl() {
     If not given, use the currentPageNumber
     */
     const fetchShortUrls = useCallback(async (pageNumber = currentPageNumber) => {
-        console.log("Fetching: ", pageNumber);
         setError(null); 
 
         try {

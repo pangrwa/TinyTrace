@@ -39,6 +39,9 @@ export default function Pagination() {
     const FIRST_THRESHOLD = 2; 
     const LAST_THRESHOLD = totalPages - 3; 
 
+    console.log("This is the total pages: ", totalPages);
+    console.log("This is the current page number: ", currentPageNumber);
+    console.log("This is the firstThreshold: ", FIRST_THRESHOLD);
     return (
         <nav aria-label="Page navigation">
             <ul className="pagination">
@@ -54,8 +57,8 @@ export default function Pagination() {
                     </li>
                     <PageDetail pageNumber={1}/>
                 </>}
-                {2 < totalPages && <PageDetail pageNumber={2} />}
-                {3 < totalPages && <PageDetail pageNumber={3} />}
+                {1 < totalPages && <PageDetail pageNumber={2} />}
+                {2 < totalPages && <PageDetail pageNumber={3} />}
 
                 {/* These are to set ... if there is at least one page number in between FIRST_THRESHOLD and current number */} 
                 {   (FIRST_THRESHOLD + 1 < LAST_THRESHOLD) &&
@@ -89,10 +92,10 @@ export default function Pagination() {
                 }
 
                 {/* These are to set the last 3 default page numbers if possible */}
-                {totalPages - 2 > FIRST_THRESHOLD && 
+                {totalPages - 3 > FIRST_THRESHOLD && 
                     <PageDetail pageNumber={totalPages - 2} />
                 }
-                {totalPages - 1 > FIRST_THRESHOLD && 
+                {totalPages - 2 > FIRST_THRESHOLD && 
                     <PageDetail pageNumber={totalPages - 1}/>
                 }
                 {totalPages > 1 && 

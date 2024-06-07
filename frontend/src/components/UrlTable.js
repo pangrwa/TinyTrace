@@ -12,7 +12,6 @@ export default function UrlTable() {
 
     useEffect(() => {
         fetchShortUrls(); 
-        console.log("testing");
     }, [fetchShortUrls]); 
 
 

@@ -1,14 +1,19 @@
 import { useState } from "react";
-import { useUrl } from "../contexts/UrlContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useFetchShortUrl } from "../hooks/useFetchShortUrls";
+import { usePage } from "../contexts/PageContext";
 
-export default function UrlDetails({ url,setCurrentPageNumber }) {
-    const DEFAULT_PAGE_SIZE = 5;
+export default function UrlDetails({ url }) {
     const [error, setError] = useState(null); 
     const [isLoading, setIsLoading] = useState(false);
+    const { fetchShortUrls } = useFetchShortUrl();
 
     const { token } = useAuth(); 
-    const { urlDispatcher, totalPagesDispatcher } = useUrl(); 
+    const {
+        currentPageNumber, currentPageNumberDispatcher,
+        DEFAULT_PAGE_SIZE
+    } = usePage(); 
+    
 
     async function handleDelete() {
          const result = window.confirm("Are you sure you want to delete this URL?"); 
@@ -35,34 +40,16 @@ export default function UrlDetails({ url,setCurrentPageNumber }) {
             }
             setError(null); 
             setIsLoading(false); 
-            const pageNumber = Math.ceil(response.headers.get("X-Total-Count") / DEFAULT_PAGE_SIZE) - 1;    
+            const totalPagesRemaining = Math.ceil(response.headers.get("X-Total-Count") / DEFAULT_PAGE_SIZE) - 1;    
+            const pageNumber = Math.min(currentPageNumber, totalPagesRemaining);
 
-            const secondRequestOptions = {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            }
-            const secondResponse = await fetch(`/api/urls?size=${DEFAULT_PAGE_SIZE}&page=${pageNumber}`, secondRequestOptions);
-            const secondBody = await secondResponse.json();
-            if (!secondResponse.ok) {
-                setError(secondBody.message);
-                setIsLoading(false); 
-                return; 
-            }
-            setError(null); 
-            setIsLoading(false); 
-            let urls = []
-            if (secondBody._embedded) {
-                urls = secondBody._embedded.urls;
-            }
-            urlDispatcher({ type: 'FETCH_URLS', payload: urls }); 
-            totalPagesDispatcher({ type: 'SET_TOTAL_PAGES', payload: secondBody.page.totalPages });
-            setCurrentPageNumber(pageNumber); 
-            
+            fetchShortUrls(pageNumber); 
+            currentPageNumberDispatcher({ type: "SET_CURRENT_PAGE_NUMBER", payload: pageNumber });
+
         } catch (e) {
             setError(e.message);
-            setError("Server is down. Please try again later.");         }
+            setError("Server is down. Please try again later.");
+        }
     }    
 
     function buildUrl(shortUrlId) {
