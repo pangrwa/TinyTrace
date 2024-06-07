@@ -16,6 +16,8 @@ export function useCreateShortUrl() {
 
 
     async function createShortUrl(longUrl, setCurrentPageNumber) {
+        setIsLoading(true); 
+        setError(null); 
         const customHeaders = new Headers(); 
         customHeaders.append("Content-Type", "application/json"); 
         customHeaders.append("Authorization", `Bearer ${localStorage.getItem("token")}`); 

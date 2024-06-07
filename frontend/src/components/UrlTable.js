@@ -3,9 +3,10 @@ import { useUrl } from "../contexts/UrlContext";
 import { useAuth } from "../contexts/AuthContext";
 import UrlDetails from "./UrlDetails";
 
-export default function UrlTable( { currentPageNumber }) {
+export default function UrlTable( { pageState }) {
 
     const DEFAULT_PAGE_SIZE = 5; 
+    const { currentPageNumber, setCurrentPageNumber } = pageState;
     const { token } = useAuth(); 
     const { 
         urls, urlDispatcher,
@@ -53,7 +54,7 @@ export default function UrlTable( { currentPageNumber }) {
             <>
                 {!error && urls && urls.map((url) => (
                         // work around till i expose ID in backend
-                        <UrlDetails key={url.shortUrlId} url={url} />
+                        <UrlDetails key={url.shortUrlId} url={url} setCurrentPageNumber={setCurrentPageNumber} />
                     ))}
                 {error && <div className="error">{error}</div>}
             </>

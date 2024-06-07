@@ -11,6 +11,8 @@ export function useSignup() {
     const navigate = useNavigate(); 
 
     async function signup(email, username, password) {
+        setIsLoading(true); 
+        setError(null); 
         try {
             const response = await fetch('api/auth/signup', {
                 method: 'POST',

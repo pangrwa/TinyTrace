@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useUrl } from "../contexts/UrlContext";
 
 /*
@@ -7,9 +8,14 @@ currentPageNumber: 0-indexed number used in the backend
 function PageDetail( { pageState, pageNumber } ) {
     const { currentPageNumber, setCurrentPageNumber } = pageState; 
     const isActivePage = currentPageNumber === pageNumber - 1;
-    console.log("This is the currentPageNumber: " , pageNumber);
-    console.log(isActivePage); 
+    const pageDetailRef = useRef(null);
 
+    useEffect(() => {
+        if (isActivePage && pageDetailRef.current) {
+            console.log("pageDetailREf is active"); 
+            pageDetailRef.current.focus(); 
+        }
+    }, [isActivePage]); 
     function handleSubmit() {
         setCurrentPageNumber(pageNumber - 1); 
     } 
@@ -35,8 +41,6 @@ export default function Pagination({ pageState }) {
     const FIRST_THRESHOLD = 2; 
     const LAST_THRESHOLD = totalPages - 3; 
 
-    console.log("This is current page number: ", currentPageNumber); 
-    console.log("This is total pages: ", totalPages);
     return (
         <nav aria-label="Page navigation">
             <ul className="pagination">
