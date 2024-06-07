@@ -51,7 +51,9 @@ public class UrlController {
     PagedModel<EntityModel<Url>> urlPagedModel = pagedResourcesAssembler.toModel(
         urls, urlModelAssembler
     );
-    return ResponseEntity.ok().contentType(MediaTypes.HAL_JSON).body(urlPagedModel);
+    return ResponseEntity.ok()
+        .contentType(MediaTypes.HAL_JSON)
+        .body(urlPagedModel);
     }
 
 
@@ -66,6 +68,8 @@ public class UrlController {
     @PostMapping("/api/urls")
     public ResponseEntity<EntityModel<Url>> createUrl(@Valid @RequestBody UrlRequest urlRequest) {
         Url newUrl = urlService.createUrl(urlRequest);
-        return ResponseEntity.ok().body(urlModelAssembler.toModel(newUrl));
+        return ResponseEntity.ok()
+            .header("X-Total-Count", String.valueOf(urlService.getTotalCount()))
+            .body(urlModelAssembler.toModel(newUrl));
     }
 }

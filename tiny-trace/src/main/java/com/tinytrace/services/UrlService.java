@@ -24,6 +24,10 @@ public class UrlService {
     private final AuthService authService;
     private final UrlRepository urlRepository;
 
+    public long getTotalCount() {
+        return urlRepository.count();  
+    }
+    
     public Url findById(String id) {
         return urlRepository.findById(id).orElseThrow(() -> new UrlNotFoundException(id));
     }
