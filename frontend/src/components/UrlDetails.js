@@ -11,6 +11,11 @@ export default function UrlDetails({ url,setCurrentPageNumber }) {
     const { urlDispatcher, totalPagesDispatcher } = useUrl(); 
 
     async function handleDelete() {
+         const result = window.confirm("Are you sure you want to delete this URL?"); 
+        if (!result) {
+            return ;
+        }
+
         setError(null); 
         setIsLoading(true); 
         try {
