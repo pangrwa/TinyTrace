@@ -2,8 +2,7 @@ package com.tinytrace.controllers;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +15,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelProcessorInvoke
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,5 +71,15 @@ public class UrlController {
         return ResponseEntity.ok()
             .header("X-Total-Count", String.valueOf(urlService.getTotalCount()))
             .body(urlModelAssembler.toModel(newUrl));
+    }
+
+    @DeleteMapping("/api/urls/{shortUrlId}")
+    public ResponseEntity<?>deleteUrl(@PathVariable String shortUrlId) {
+        urlService.deleteUrlbyShortUrlId(shortUrlId); 
+        HashMap<String, String> response = new HashMap<>(); 
+        response.put("success", "true"); 
+        return ResponseEntity.ok()
+            .header("X-Total-Count", String.valueOf(urlService.getTotalCount()))
+            .body(response);
     }
 }
