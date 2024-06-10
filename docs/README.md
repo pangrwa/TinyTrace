@@ -11,3 +11,4 @@ For more information regarding the design of the application [Developer Guide](.
 
 **Home page**
 ![home-page](assets/images/home-page.png)
+![home-page-mobile](assets/images/home-page-mobile.png)
