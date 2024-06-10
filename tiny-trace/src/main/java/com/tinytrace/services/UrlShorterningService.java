@@ -13,10 +13,12 @@ import lombok.AllArgsConstructor;
 @Service
 public class UrlShorterningService {
 
+
     public static final int SHORT_URL_LENGTH = 7;
-    public static final int BASE_64_LENGTH = 64;
+    // removed backslash temporarily to avoid confusion with the endpoint
+    public static final int BASE_64_LENGTH = 63;
     public static final int MAX_RETRIES = 10;
-    private static final String BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    private static final String BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+";
     private UrlService urlService; 
 
     // prevent circular dependency by lazy loading

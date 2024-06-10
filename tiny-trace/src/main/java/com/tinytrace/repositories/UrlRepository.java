@@ -18,5 +18,7 @@ public interface UrlRepository extends MongoRepository<Url, String> {
 
     Page<Url> findByUserId(String userId, Pageable pageable);
     
+    long countByUserId(String userId); 
+
     boolean existsByShortUrlId(String shortUrlId); 
 }
