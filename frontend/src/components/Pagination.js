@@ -93,9 +93,15 @@ export default function Pagination() {
                 {totalPages - 2 > FIRST_THRESHOLD && 
                     <PageDetail pageNumber={totalPages - 1}/>
                 }
+<<<<<<< Updated upstream
                 {totalPages > 3  && 
                     <>
                         <PageDetail pageNumber={totalPages} />
+=======
+                
+                {totalPages > 3  && <PageDetail pageNumber={totalPages} />}
+                {totalPages > 1 && 
+>>>>>>> Stashed changes
                         <li className="page-item">
                             <button className={`page-link ${isLastPage ? "disabled" : ""}`} arial-label="Next" disabled={isLastPage}
                                 onClick={() => currentPageNumberDispatcher({ type: 'SET_CURRENT_PAGE_NUMBER', payload: currentPageNumber + 1})}
@@ -103,7 +109,6 @@ export default function Pagination() {
                                 &raquo;
                             </button>
                         </li>
-                    </>
                 }
             </ul>
         </nav>
