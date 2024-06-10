@@ -69,7 +69,7 @@ public class UrlController {
     public ResponseEntity<EntityModel<Url>> createUrl(@Valid @RequestBody UrlRequest urlRequest) {
         Url newUrl = urlService.createUrl(urlRequest);
         return ResponseEntity.ok()
-            .header("X-Total-Count", String.valueOf(urlService.getTotalCount()))
+            .header("X-Total-Count", String.valueOf(urlService.countByUserId()))
             .body(urlModelAssembler.toModel(newUrl));
     }
 
@@ -79,7 +79,7 @@ public class UrlController {
         HashMap<String, String> response = new HashMap<>(); 
         response.put("success", "true"); 
         return ResponseEntity.ok()
-            .header("X-Total-Count", String.valueOf(urlService.getTotalCount()))
+            .header("X-Total-Count", String.valueOf(urlService.countByUserId()))
             .body(response);
     }
 }

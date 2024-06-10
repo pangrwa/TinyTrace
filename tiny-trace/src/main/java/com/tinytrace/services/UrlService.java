@@ -24,8 +24,11 @@ public class UrlService {
     private final AuthService authService;
     private final UrlRepository urlRepository;
 
-    public long getTotalCount() {
-        return urlRepository.count();  
+    public long countByUserId() {
+        String authUsername = authService.getUserDetails().getUsername();
+        String authUserId = userService.findByUsername(authUsername).getId();
+
+        return urlRepository.countByUserId(authUserId); 
     }
 
     public Url findById(String id) {
