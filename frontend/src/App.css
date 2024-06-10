@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+:root {
+    --primary: #df741c; 
+    --error: #e7195a;
+}
+
+/* error */ 
+.error {
+    color: var(--error);  
+    font-size: 0.8em;
+}
+
+body {
+    background: #f1f1f1; 
+    margin: 0; 
+}
+
+/* nav bar */ 
+header {
+    background: #fff; 
+}
+
+header .container {
+    max-width: 1400px;
+    margin: 0 auto; 
+    padding: 10px 20px; 
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+}
+
+header a {
+    text-decoration: none; 
+    color: #333;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    margin-left: 10px;
+}
+
+
+
+/* form */ 
+form.signup, form.login {
+    max-width: 400px; 
+    padding: 20px;
+    margin: 40px auto; 
+    border-radius: 10px; 
+    background: #fff;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+form.generate-shortUrl {
+    margin: 40px 150px 40px 40px;  
+}
+
+form button {
+    background: var(--primary); 
+    border: 0; 
+    font-family: 'Poppins';
+    padding: 10px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    margin: 20px 0;
+}
+
+
+label, input {
+    display: block; 
+}
+
+
+/* Home */ 
+.home-page {
+    display: flex; 
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* get all the flex-items */ 
+.home-page > * {
+    flex: 1; 
+    margin: 20px; 
+}
+
+
+.urls {
+    margin: 40px; 
+    background-color: white; 
+    height: 100%;
+}
