@@ -47,7 +47,7 @@ nav a {
 
 
 /* form */ 
-form.signup, form.login, form.generate-shortUrl {
+form.signup, form.login {
     max-width: 400px; 
     padding: 20px;
     margin: 40px auto; 

@@ -13,7 +13,7 @@ export default function UrlForm() {
     }
 
   return (
-    <form className="generate-shortUrl" method="post" onSubmit={handleSubmit}>
+    <form className="bg-body p-3 rounded-3 " method="post" onSubmit={handleSubmit}>
       <h3>Generate short URL</h3>
 
       <input

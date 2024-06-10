@@ -16,12 +16,13 @@ export default function UrlTable() {
 
 
     return (
-            <>
+            <div className="d-flex flex-column">
                 {!error && urls && urls.map((url) => (
                         // work around till i expose ID in backend
                         <UrlDetails key={url.shortUrlId} url={url} />
                     ))}
                 {error && <div className="error">{error}</div>}
-            </>
+            </div>
+
     )
 }

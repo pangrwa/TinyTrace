@@ -57,11 +57,19 @@ export default function UrlDetails({ url }) {
     }
 
     return (
-        <div className="d-flex flex-column bg-light mx-3 my-3 rounded-1 p-4">
-            <p className="mx-3 my-3">{url.longUrl}</p>
-            <p className="mx-3 my-3">Short Url: <a href={url.longUrl}>{buildUrl(url.shortUrlId)}</a></p>
-            <button className="btn btn-danger btn-sm px-2" onClick={handleDelete}>Delete</button>
-            {error && <div className="error" disabled={isLoading}>{error}</div>}
+        <div className="mb-3 d-flex flex-column bg-light rounded-4 p-3">
+            <p className="bg-secondary-subtle p-2 rounded-4 fw-bold text-break">{url.longUrl}</p>
+            <div className="container">
+                <div className="row align-items-center">
+                    <p className="col-10 text-break m-0">Short Url: <a href={url.longUrl}>{buildUrl(url.shortUrlId)}</a></p>
+                    <button
+                        className="col btn btn-danger btn-sm"
+                        onClick={handleDelete}
+                        disabled={isLoading}
+                    >X</button>
+                </div>
+            </div>
+            {error && <div className="error">{error}</div>}
         </div>
     )
 }
