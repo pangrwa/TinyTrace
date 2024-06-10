@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-import { useUrl } from "../contexts/UrlContext";
 import { usePage } from "../contexts/PageContext";
 
 /*
@@ -39,9 +37,6 @@ export default function Pagination() {
     const FIRST_THRESHOLD = 2; 
     const LAST_THRESHOLD = totalPages - 3; 
 
-    console.log("This is the total pages: ", totalPages);
-    console.log("This is the current page number: ", currentPageNumber);
-    console.log("This is the firstThreshold: ", FIRST_THRESHOLD);
     return (
         <nav aria-label="Page navigation">
             <ul className="pagination">
@@ -98,9 +93,9 @@ export default function Pagination() {
                 {totalPages - 2 > FIRST_THRESHOLD && 
                     <PageDetail pageNumber={totalPages - 1}/>
                 }
+                
+                {totalPages > 3  && <PageDetail pageNumber={totalPages} />}
                 {totalPages > 1 && 
-                    <>
-                        <PageDetail pageNumber={totalPages} />
                         <li className="page-item">
                             <button className={`page-link ${isLastPage ? "disabled" : ""}`} arial-label="Next" disabled={isLastPage}
                                 onClick={() => currentPageNumberDispatcher({ type: 'SET_CURRENT_PAGE_NUMBER', payload: currentPageNumber + 1})}
@@ -108,7 +103,6 @@ export default function Pagination() {
                                 &raquo;
                             </button>
                         </li>
-                    </>
                 }
             </ul>
         </nav>

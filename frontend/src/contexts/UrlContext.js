@@ -7,9 +7,6 @@ const urlReducer = (state, action) => {
     case 'FETCH_URLS': {
         return action.payload;
     }
-    case 'CREATE_URL': {
-        return [...state, action.payload]
-    }
     default: {
         return state; 
     }
