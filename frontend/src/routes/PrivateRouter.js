@@ -3,11 +3,15 @@ import { useAuth } from "../contexts/AuthContext";
 import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { isExpired, decodeToken } from "react-jwt";
+import { useUrl } from "../contexts/UrlContext";
+import { useLogout } from "../hooks/useLogout";
 
 
 export default function PrivateRoute() {
     const { token, setToken } = useAuth();
     const navigate = useNavigate();  
+    const { logout } = useLogout(); 
+
     const decodedToken = decodeToken(token); 
     const isMyTokenExpired = isExpired(token);
 
@@ -16,7 +20,7 @@ export default function PrivateRoute() {
 
         const onExpire = () => {
             alert("Your session has expired. Please login again.")
-            setToken(""); 
+            logout(); 
             navigate("/"); 
         }
 
