@@ -1,0 +1,167 @@
+<mxfile host="app.diagrams.net" modified="2024-06-10T12:31:11.341Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="noEfC59dyXzv3sb7nw8y" version="24.4.14" type="device">
+  <diagram name="Page-1" id="mVvjk6Rp0ko1GjzzDK8i">
+    <mxGraphModel dx="1234" dy="1180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-1" value="Security Filter Chain" style="swimlane;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=20;horizontal=0;horizontalStack=1;" vertex="1" parent="1">
+          <mxGeometry x="134.19" y="140" width="562.5" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-2" value="" style="swimlane;startSize=20;" vertex="1" parent="cssk-zQzJQYKFO6r5NDg-1">
+          <mxGeometry x="20" width="135" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-9" value="&lt;font color=&quot;#3399ff&quot;&gt;JwtAuthenticationFilter&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=270;" vertex="1" parent="cssk-zQzJQYKFO6r5NDg-2">
+          <mxGeometry x="-5" y="160" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-3" value="" style="swimlane;startSize=20;" vertex="1" parent="cssk-zQzJQYKFO6r5NDg-1">
+          <mxGeometry x="155" width="202.5" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-14" value="UsernamePasswordAuthenticationFilter" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=270;" vertex="1" parent="cssk-zQzJQYKFO6r5NDg-3">
+          <mxGeometry x="-27.5" y="170" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-4" value="" style="swimlane;startSize=20;" vertex="1" parent="cssk-zQzJQYKFO6r5NDg-1">
+          <mxGeometry x="357.5" width="205" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-15" value="Remaining Filters (Authorization)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=270;" vertex="1" parent="cssk-zQzJQYKFO6r5NDg-4">
+          <mxGeometry x="-10" y="160" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-20" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;exitX=-0.011;exitY=0.447;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="cssk-zQzJQYKFO6r5NDg-1">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="290" y="30" as="sourcePoint" />
+            <mxPoint x="10" y="292" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-21" value="Request" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="cssk-zQzJQYKFO6r5NDg-20">
+          <mxGeometry x="-0.2" y="-1" relative="1" as="geometry">
+            <mxPoint y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-22" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="130" y="360" as="sourcePoint" />
+            <mxPoint x="20" y="360" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-23" value="Reponse" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="cssk-zQzJQYKFO6r5NDg-22">
+          <mxGeometry x="-0.12" y="2" relative="1" as="geometry">
+            <mxPoint x="-2" y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-24" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="694.19" y="300" as="sourcePoint" />
+            <mxPoint x="440" y="520" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="800" y="300" />
+              <mxPoint x="800" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-26" value="&lt;span style=&quot;font-size: 11px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;Authentication Request&lt;/span&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="490" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-29" value="Authentication&lt;div&gt;Manager&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-31" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cssk-zQzJQYKFO6r5NDg-26" target="cssk-zQzJQYKFO6r5NDg-29">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="340" y="570" as="sourcePoint" />
+            <mxPoint x="440" y="570" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-32" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="450" y="619.5" as="sourcePoint" />
+            <mxPoint x="530" y="620" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-33" value="&lt;span style=&quot;font-size: 11px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;Authentication Reponse&lt;/span&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="590" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-34" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="cssk-zQzJQYKFO6r5NDg-33">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="640" y="610" as="sourcePoint" />
+            <mxPoint x="700" y="360" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="740" y="620" />
+              <mxPoint x="740" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-36" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="cssk-zQzJQYKFO6r5NDg-29">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="360" y="700" as="sourcePoint" />
+            <mxPoint x="390" y="700" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-37" value="Authentication&lt;div&gt;Provider&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-40" value="PasswordEncoder&lt;div&gt;(Bcrypt)&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="820" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-41" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cssk-zQzJQYKFO6r5NDg-37" target="cssk-zQzJQYKFO6r5NDg-40">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="350" y="790" as="sourcePoint" />
+            <mxPoint x="450" y="790" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-42" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="cssk-zQzJQYKFO6r5NDg-37">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="400" y="770" as="sourcePoint" />
+            <mxPoint x="520" y="820" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="520" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-43" value="UserDetailsService&lt;div&gt;(SecurityUser)&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="820" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-44" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="590" y="849.5" as="sourcePoint" />
+            <mxPoint x="690" y="849.5" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-45" value="Loads User" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="cssk-zQzJQYKFO6r5NDg-44">
+          <mxGeometry x="-0.14" y="-3" relative="1" as="geometry">
+            <mxPoint y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-46" value="MongoDB" style="shape=datastore;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="820" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-47" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="cssk-zQzJQYKFO6r5NDg-48">
+          <mxGeometry width="100" relative="1" as="geometry">
+            <mxPoint x="220" y="480" as="sourcePoint" />
+            <mxPoint x="222" y="580" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-50" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="cssk-zQzJQYKFO6r5NDg-48" target="cssk-zQzJQYKFO6r5NDg-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-53" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="cssk-zQzJQYKFO6r5NDg-48" target="cssk-zQzJQYKFO6r5NDg-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-48" value="Username&lt;div&gt;Password&lt;/div&gt;&lt;div&gt;Token&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-49" value="Performs&lt;div&gt;Authentication&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="120" y="520" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cssk-zQzJQYKFO6r5NDg-51" value="Security&lt;div&gt;ContextHolder&lt;/div&gt;&lt;div&gt;(Authentication Details)&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="690" width="160" height="150" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
